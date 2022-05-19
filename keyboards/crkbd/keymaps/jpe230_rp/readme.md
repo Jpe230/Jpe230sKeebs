@@ -21,5 +21,6 @@ The four layers:
   - Set the RP2040 pins for matrix, OLED and RGB
 - Added `mcuconf.h` to use I2C1 (for OLED)
 - Added `halconf.h` to enable I2C (for OLED)
+
 ## Flashing
 Flash using `qmk compile -kb crkbd -km jpe230_rp` for Pro Micro
