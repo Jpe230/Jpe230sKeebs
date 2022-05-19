@@ -1,4 +1,5 @@
-// Copyright 2021 Dasky (@Jpe230)
+// Copyright 2021 Dasky (@daskygit)
+// Copyright 2022 Jose Pablo Ramirez (@Jpe230)
 // SPDX-License-Identifier: GPL-2.0-or-later
 #pragma once
 
