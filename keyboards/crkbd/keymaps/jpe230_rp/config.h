@@ -21,19 +21,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+
+/* Start RP2040 Specific configuration*/
 #undef MATRIX_ROW_PINS
 #define MATRIX_ROW_PINS \
     { GP4, GP5, GP6, GP7 }
 
-// wiring of each half
+/* wiring of each half */
 #undef MATRIX_COL_PINS
 #define MATRIX_COL_PINS \
-    { GP29, GP28, GP27, GP26, GP22, GP20 }
+    { GP29, GP28, GP27, GP26, GP22, GP20 } /* Sparkfun RP2040 */
+    //{ GP29, GP28, GP27, GP26, GP18, GP20 } /* Adafruit KB2040 */
 
 #undef SOFT_SERIAL_PIN
 #define SERIAL_USART_TX_PIN GP1
 
-#define SELECT_SOFT_SERIAL_SPEED 3
+#define SELECT_SOFT_SERIAL_SPEED 0
 
 #ifndef RGB_MATRIX_ENABLE
 #   define SPLIT_WPM_ENABLE
@@ -46,6 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define I2C1_SDA_PIN GP2
 #define I2C1_SCL_PIN GP3
 #define I2C_DRIVER I2CD2
+/* End RP2040 Specific configuration*/
 
 #ifdef RGB_MATRIX_ENABLE
 #   define RGB_MATRIX_KEYPRESSES
