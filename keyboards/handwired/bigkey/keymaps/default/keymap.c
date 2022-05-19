@@ -1,0 +1,44 @@
+/* Copyright 2020 Taylore101
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include QMK_KEYBOARD_H
+
+enum custom_keycodes {
+    JP_KC = SAFE_RANGE,
+};
+
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = LAYOUT(
+        KC_ENTER, OSL(1), RGB_TOG
+    ),
+    [1] = LAYOUT(
+        JP_KC, OSL(2), RGB_TOG
+    ),
+    [2] = LAYOUT(
+        RGB_MOD, RESET, RGB_TOG
+    ),
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+    case JP_KC:
+        if (record->event.pressed) {
+            // when keycode QMKBEST is pressed
+            //SEND_STRING("Iniciando auto destruccion..." SS_DELAY(1750) "3..." SS_DELAY(1750) "2..." SS_DELAY(1750) "1..." SS_DELAY(1750) SS_TAP(X_SLEP));
+        }
+        break;
+    }
+    return true;
+};
