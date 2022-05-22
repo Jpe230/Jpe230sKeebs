@@ -28,27 +28,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     { GP4, GP5, GP6, GP7 }
 
 /* wiring of each half */
+
 #undef MATRIX_COL_PINS
+
+/* Adafruit KB2040 */
 #define MATRIX_COL_PINS \
-    { GP29, GP28, GP27, GP26, GP22, GP20 } /* Sparkfun RP2040 */
-    //{ GP29, GP28, GP27, GP26, GP18, GP20 } /* Adafruit KB2040 */
+    { GP29, GP28, GP27, GP26, GP18, GP20 } 
+    
+
+ /* Sparkfun RP2040 */
+/* #define MATRIX_COL_PINS \
+    { GP29, GP28, GP27, GP26, GP22, GP20 } */
 
 #undef SOFT_SERIAL_PIN
 #define SERIAL_USART_TX_PIN GP1
 
 #define SELECT_SOFT_SERIAL_SPEED 0
 
-#ifndef RGB_MATRIX_ENABLE
-#   define SPLIT_WPM_ENABLE
-#endif
-
 /* ws2812 RGB LED */
 #undef RGB_DI_PIN
 #define RGB_DI_PIN GP0
 
+/* I2C Pin mapping (OLED) */
 #define I2C1_SDA_PIN GP2
 #define I2C1_SCL_PIN GP3
 #define I2C_DRIVER I2CD2
+
+/* TRANSIENT EEPROM */
+#define TRANSIENT_EEPROM_SIZE 1000
+
 /* End RP2040 Specific configuration*/
 
 #ifdef RGB_MATRIX_ENABLE
@@ -101,4 +109,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #   define ENABLE_RGB_MATRIX_MULTISPLASH
 #   define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #   define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
+#endif
+
+#ifndef RGB_MATRIX_ENABLE
+#   define SPLIT_WPM_ENABLE
 #endif
