@@ -114,3 +114,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef RGB_MATRIX_ENABLE
 #   define SPLIT_WPM_ENABLE
 #endif
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 0
+
+#define OVERRIDE_DEBOUNCE 7
