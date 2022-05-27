@@ -135,7 +135,7 @@ bool uppercase;
 HSV prev_hsv;
 uint8_t prev_mode;
 
-void keyboard_post_init_kb(void) {
+void keyboard_post_init_user(void) {
     tog_sbob       = false;
     tog_via        = false;
     uppercase      = false;
