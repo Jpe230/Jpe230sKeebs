@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef SOFT_SERIAL_PIN
 #define SERIAL_USART_TX_PIN GP1
 
-#define SELECT_SOFT_SERIAL_SPEED 0
+#define SELECT_SOFT_SERIAL_SPEED 5
 
 /* ws2812 RGB LED */
 #undef RGB_DI_PIN
