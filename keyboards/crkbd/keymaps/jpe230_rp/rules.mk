@@ -2,10 +2,10 @@ MCU = RP2040
 BOOTLOADER = rp2040
 
 RGB_MATRIX_ENABLE = yes
-WS2812_DRIVER     = pio
+WS2812_DRIVER     = vendor
 OLED_ENABLE       = yes
 OLED_DRIVER       = SSD1306
-SERIAL_DRIVER     = pio
+SERIAL_DRIVER     = vendor
 VIA_ENABLE        = yes
 EEPROM_DRIVER     = transient
 

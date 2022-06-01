@@ -14,8 +14,8 @@ The four layers:
 ## Changes vs my Pro Micro Board
 - Updated `rules.mk`:
   - Set MCU to `RP2040`
-  - WS2812 driver to `pio`
-  - Serial driver to `pio`
+  - WS2812 driver to `vendor`
+  - Serial driver to `vendor`
   - Enable warnings
 - Updated `config.h`:
   - Set the RP2040 pins for matrix, OLED and RGB

@@ -118,4 +118,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BOOTMAGIC_LITE_ROW 0
 #define BOOTMAGIC_LITE_COLUMN 0
 
-#define OVERRIDE_DEBOUNCE 7
+#undef DEBOUNCE
+#define DEBOUNCE 1
+#define OVERRIDE_DEBOUNCE 1
