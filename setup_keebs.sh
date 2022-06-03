@@ -1,6 +1,6 @@
 #!/bin/sh
 
-readonly QMKDIR=/home/jpe230/qmk/qmk_firmware
+readonly QMKDIR=$HOME/qmk/qmk_firmware
 readonly EXCLUDE=$QMKDIR/.git/info/exclude
 readonly CONFIG=$QMKDIR/.git/config
 
@@ -11,9 +11,20 @@ else
   echo 'QMK cloned!'
 fi
 
+# echo 'Restoring branch'
+# git -C $QMKDIR reset --hard HEAD
+
+# echo 'Restoring submodules'
+# make -C $QMKDIR git-submodule
+
+echo 'Removing symlinked files'
+find $QMKDIR -type l -not -path "$QMKDIR/users/*" -delete
+
+echo 'Removing dir. structure'
+find $QMKDIR -empty -type d -not -path "$QMKDIR/.git/*" -delete
+
 echo 'Copying contents as symlinks'
-cp -as /home/jpe230/qmk/jpe230s_keebs/keyboards/* $QMKDIR/keyboards/ >/dev/null 2>&1
-echo 'Done copying'
+cp -as $HOME/qmk/jpe230s_keebs/keyboards/* $QMKDIR/keyboards/ >/dev/null 2>&1
 
 if grep -Fxq '[remote "Jpe230"]' $CONFIG; then
   echo '.git/config already modified!'
@@ -21,8 +32,6 @@ else
   echo '.git/config not modified!'
 
   yes | cp -rf ./jpe230_config $CONFIG
-
-  echo 'Done modifying config file!'
 
 fi
 
@@ -44,6 +53,6 @@ else
     echo 'keyboards/keychron/q2/q2_ansi_stm32l432_ec11/keymaps/jpe230/*'
   } >>$EXCLUDE
 
-  echo 'Done modifying excludes file!'
-
 fi
+
+echo 'Done! Have fun'
