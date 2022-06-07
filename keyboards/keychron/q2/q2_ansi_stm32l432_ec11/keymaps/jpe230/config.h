@@ -16,6 +16,9 @@
 
 #define TAPPING_TOGGLE 2
 
+/* Enable USB suspend and timeout */
+#define RGB_DISABLE_WHEN_USB_SUSPENDED
+#define RGB_DISABLE_TIMEOUT 600000
 /* Startup values
  * RGB = #00c8ff
  */
