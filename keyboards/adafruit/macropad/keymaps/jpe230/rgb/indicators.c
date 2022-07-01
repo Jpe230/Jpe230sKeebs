@@ -61,12 +61,13 @@ const HexColor PROGMEM indicators[][MATRIX_ROWS-1][MATRIX_COLS] = {
         {{0x0ffaf6}, {0x3d0099}, {0x3d0099}},
         {{0xd2db25}, {0x3d0099}, {0x3d0099}}
     },
+    SECRET_INDICATORS
     {
         {{_x______}, {_x______}, {_x______}},
         {{_x______}, {_x______}, {_x______}},
         {{_x______}, {_x______}, {_x______}},
         {{_x______}, {_x______}, {_x______}}
-    },
+    }
 };
 
 void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {

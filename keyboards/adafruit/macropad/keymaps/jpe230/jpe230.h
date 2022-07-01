@@ -19,6 +19,17 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include <string.h>
+#include "print.h"
+
+/* -----------------------
+ * Include secrets if it necessary
+ * -----------------------
+ */
+#ifdef ENABLE_SECRETS
+    #include "secrets/secrets.h"
+#else
+    #include "no-secrets.h"
+#endif
 
 #ifdef VIA_ENABLE
     #define USER_START USER00
@@ -26,10 +37,6 @@
     #define USER_START SAFE_RANGE
 #endif
 
-/* -----------------------
- * Custom Keycodes Region
- * -----------------------
- */
 enum JP_KEYCODES {
     /* Teams */
     TM_AVC = USER_START, // Accept Video Call
@@ -67,6 +74,7 @@ enum JP_KEYCODES {
     MC_ODEF,             // Select Default OLED
     MC_OBNC,             // Select Bongo Cat OLED
     MC_OLOG,             // Select Logo OLED
+    SECRET_KEYCODES      // Secrets Keycodes
 };
 
 #define __xxx__ KC_NO
@@ -83,9 +91,11 @@ enum JP_LAYERS{
     VS,
     DISCORD,
     CONFS,
+    SECRET_LAYERS
     EMPTLAYER
 };
 
+#define LAYER_COUNT (8 + SECRET_LAYER_COUNT)
 
 /* -----------------------
  * Custom Layers Prototypes
@@ -113,6 +123,7 @@ enum OLED_STATES{
  * OLED Function Prototypes
  * -----------------------
  */
+void center_text(const char *text, char *output, int width);
 uint8_t get_current_wpm(void);
 void fake_wpm_increment(void);
 void fake_wpm_decay(void);

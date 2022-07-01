@@ -17,7 +17,7 @@
 #include "jpe230.h"
 
 /* Count of Layers */
-static uint8_t layer_count = 8;
+static uint8_t layer_count = LAYER_COUNT;
 
 /* Desired states */
 uint8_t desired_oled_state = DEFAULT_OLED;
@@ -62,6 +62,7 @@ void handle_layer_move(uint8_t layer) {
     /* If we are not in the layer and the layer is valid */
     if(layer != layer_idx && layer < layer_count){
         /* Move the Layer to the desired one */
+        uprintf("Moving layer to: %d number of layer: %d\n", layer, layer_count);
         layer_move(layer);
 
         /* Reset IDLING status and timer */
@@ -85,12 +86,14 @@ void cycle_layer(bool next) {
     /* Add or substract the next layer */
     layer_idx = (layer_idx + (next ?  1 : -1));
 
-     /* Check if the layer is valid */
+    /* Check if the layer is valid */
     if(layer_idx >= layer_count)
         layer_idx = 0;
     else if(layer_idx < 0)
         layer_idx = layer_count - 1;
 
+    SECRET_LAYER_HANDLING
+    
     /* Move the Layer */
     handle_layer_move(layer_idx);
 }
@@ -235,6 +238,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 desired_oled_state = LOGO;
                 hide_indicators();
                 break;
+            SECRET_KC_HANDLING
         }
     }
     return true;

@@ -34,6 +34,7 @@ const char* PROGMEM layer_strings[] = {
     "Visual Studio",
     "Discord",
     "Configuration",
+    SECRET_LAYER_STRINGS
     "Empty"
 };
 
@@ -43,58 +44,58 @@ const char PROGMEM *key_strings[][MATRIX_ROWS][MATRIX_COLS] = {
         {___ns____, "Vol. Up", ___ns____},
         {___ns____, "Vol. Dn", ___ns____},
         {___ns____, "Mute"   , ___ns____},
-        {"Prev T ", "Play"   , "Next T."},
+        {"Prev T ", "Play"   , "Next T."}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"Vol. +" , "Accpt C", " Mute M"},
         {"Vol. -" , "Accpt V", " Tog V" },
         {"Mute"   , "Decln C", ___ns____},
-        {___ns____, "End Cll", ___ns____},
+        {___ns____, "End Cll", ___ns____}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"Zoom +" , "New Tab", " Vol. +"},
         {"Zoom -" , "Nxt Tab", " Vol. -"},
         {"Cls Tb ", "Prv Tab", " Mute"  },
-        {"Prev T.", "Play"   , "Next T."},
+        {"Prev T.", "Play"   , "Next T."}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"Zoom +" , ___ns____, "Sidebar"},
         {"Zoom -" , "Nxt Tab", " Cmment"},
         {___ns____, "Prv Tab", " Ucmmnt"},
-        {"Bck cur", ___ns____, "Nxt cur"},
+        {"Bck cur", ___ns____, "Nxt cur"}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"Zoom +" , "RunDbg" , ___ns____},
         {"Zoom -" , ___ns____, " Cmment"},
         {___ns____, "StepIn",  " Ucmmnt"},
-        {"Bckcur ", "NextBp ", " Nxtcur"},
+        {"Bckcur ", "NextBp ", " Nxtcur"}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"Acpt C ", "PrvMsg ", "NxtMsg" },
         {___ns____, "PageUp ", "Vol. +" },
         {___ns____, "PageDn ", "Vol. -" },
-        {___ns____, ___ns____, ___ns____},
+        {___ns____, ___ns____, ___ns____}
     },
     {
         {___ns____, ___ns____, "RGB TOG"},
         {"TgOLED ", "TgIndi ", "MskAnim"},
         {"BongoC ", "RGBHUE ", "ShwAnim"},
         {"Logo"   , "RGBSAT ", "RGBMOD "},
-        {"LShift ", "RGBVAL ", "RGBSPD "},
+        {"LShift ", "RGBVAL ", "RGBSPD "}
     },
-
+    SECRET_KEY_STRING
     {
-        {___ns____, ___ns____, "RGBTOG" },
         {___ns____, ___ns____, ___ns____},
         {___ns____, ___ns____, ___ns____},
         {___ns____, ___ns____, ___ns____},
         {___ns____, ___ns____, ___ns____},
-    },
+        {___ns____, ___ns____, ___ns____}
+    }
 };
 
 
@@ -131,7 +132,6 @@ void render_layer_indicators(int layer) {
 
     /* Empty Line */
     oled_write_ln("", false);
-
 }
 
 void render_default_state(void){
@@ -139,14 +139,16 @@ void render_default_state(void){
     int layer_idx = get_highest_layer(layer_state|default_layer_state);
 
     /* Render the Logo on emptylayer */
-    if(layer_idx == EMPTLAYER)
+    switch(layer_idx)
     {
-        render_logo();
-        return;
+        case EMPTLAYER:
+            render_logo();
+            return;
+        SECRET_OLED
+        default:
+            /* Render the indicators */
+            render_layer_indicators(layer_idx);
     }
-
-    /* Render the indicators */
-    render_layer_indicators(layer_idx);
 }
 
 bool oled_task_user(void) {
@@ -158,6 +160,7 @@ bool oled_task_user(void) {
     case DEFAULT_OLED:
         render_default_state();
         break;
+
     case BONGO_CAT:
         render_bongo_cat();
         break;
