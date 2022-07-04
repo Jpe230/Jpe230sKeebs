@@ -20,9 +20,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "print.h"
+#include "lib/ds3231/ds3231.h"
 
 /* -----------------------
- * Include secrets if it necessary
+ * Include secrets
  * -----------------------
  */
 #ifdef ENABLE_SECRETS
@@ -37,6 +38,10 @@
     #define USER_START SAFE_RANGE
 #endif
 
+/* -----------------------
+ * Custom Keycodes
+ * -----------------------
+ */
 enum JP_KEYCODES {
     /* Teams */
     TM_AVC = USER_START, // Accept Video Call
@@ -73,7 +78,8 @@ enum JP_KEYCODES {
     MC_SHWA,             // Show Anim
     MC_ODEF,             // Select Default OLED
     MC_OBNC,             // Select Bongo Cat OLED
-    MC_OLOG,             // Select Logo OLED
+    MC_OLOG,             // Select Logo OLED,
+    TEST_CLOCK,
     SECRET_KEYCODES      // Secrets Keycodes
 };
 
@@ -136,6 +142,8 @@ void render_bongo_cat(void);
 
 extern uint8_t oled_state;
 extern bool indicator_oled_state[MATRIX_ROWS][MATRIX_COLS];
+extern const char PROGMEM *key_strings[][MATRIX_ROWS][MATRIX_COLS];
+extern const char* PROGMEM layer_strings[];
 
 /* -----------------------
  * OLED Defines

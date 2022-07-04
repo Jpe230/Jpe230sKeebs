@@ -144,7 +144,7 @@ void render_default_state(void){
         case EMPTLAYER:
             render_logo();
             return;
-        SECRET_OLED
+        SECRET_OLED_LAYER_RENDER
         default:
             /* Render the indicators */
             render_layer_indicators(layer_idx);

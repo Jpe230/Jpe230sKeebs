@@ -5,12 +5,18 @@ SRC += \
     oled/bongocat.c \
     oled/lockscreen_oled.c \
     oled/logo.c \
-    secrets/lockscreen.c \
-    secrets/totp.c \
-    secrets/sha1.c
+    lib/ds3231/ds3231.c
 
-# VIA_ENABLE = yes
-# OPENRGB_ENABLE = yes
+QUANTUM_LIB_SRC += i2c_master.c
+
 CONSOLE_ENABLE = yes
 
-OPT_DEFS += -D${KB}
+# ENABLE SECRETS 
+ifeq ($(strip $(DEF)), ENABLE_SECRETS)
+    OPT_DEFS += -D${DEF}
+    SRC += \
+        secrets/lockscreen.c \
+        secrets/sha1.c \
+        secrets/totp.c
+endif
+        

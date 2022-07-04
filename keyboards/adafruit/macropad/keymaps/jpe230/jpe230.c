@@ -120,6 +120,17 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     return false;
 }
 
+void keyboard_pre_init_user(void) {
+   
+}
+
+void keyboard_post_init_user(void) {
+    debug_enable=true;
+    i2c_init();
+    //pimoroni_trackball_set_rgbw(0,0,0,255);
+    //uprintf("Init RTC: %d", ds3231_init());
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     uint8_t row = record->event.key.row;
@@ -135,9 +146,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         /* Increment the fake wpm */
         fake_wpm_increment();
-
+        ds3231_time_t time;
         switch (keycode) {
             /* Teams Macros */
+            case TEST_CLOCK:
+                uprintf("Time (res: %d): %d/%d/%d %d:%d:%d\n", ds3231_get_time(&time), 
+                time.year,
+                time.month,
+                time.date,
+                time.hour,
+                time.minute,
+                time.second);
+
+                uprintf("UNIX: %ld\n", time.unixtime);
+                break;
             case TM_AVC:
                 SEND_STRING(SS_LCTL(SS_LSFT("a")));
                 break;

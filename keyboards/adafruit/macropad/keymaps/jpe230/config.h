@@ -20,7 +20,12 @@
 #define RGB_MATRIX_STARTUP_VAL 120
 
 /* Enable more than 4 layers in VIA */
-#define DYNAMIC_KEYMAP_LAYER_COUNT 8
+#define DYNAMIC_KEYMAP_LAYER_COUNT 10
 
 /* Enable RGB Matrix Configuration in VIA */
 #define VIA_QMK_RGBLIGHT_ENABLE
+
+/* I2C Pin mapping (RTC DS3231) */
+#define I2C_DRIVER I2CD1
+#define I2C1_SDA_PIN GP20
+#define I2C1_SCL_PIN GP21

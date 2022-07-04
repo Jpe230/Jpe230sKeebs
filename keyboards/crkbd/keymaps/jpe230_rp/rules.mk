@@ -9,10 +9,7 @@ OLED_ENABLE       = yes
 OLED_DRIVER       = SSD1306
 SERIAL_DRIVER     = vendor
 VIA_ENABLE        = yes
-EEPROM_DRIVER     = transient
-POINTING_DEVICE_ENABLE = yes
-POINTING_DEVICE_DRIVER = pimoroni_trackball
+#POINTING_DEVICE_ENABLE = yes
+#POINTING_DEVICE_DRIVER = pimoroni_trackball
 
 DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
-ALLOW_WARNINGS    = yes
-PICO_INTRINSICS_ENABLED = no # ATM Unsupported by ChibiOS!

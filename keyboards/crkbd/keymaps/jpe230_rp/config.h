@@ -52,9 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define I2C1_SCL_PIN GP3
 #define I2C_DRIVER I2CD2
 
-/* TRANSIENT EEPROM */
-#define TRANSIENT_EEPROM_SIZE 1000
-
 #define ENABLE_COMPILE_KEYCODE
 
 /* End RP2040 Specific configuration*/

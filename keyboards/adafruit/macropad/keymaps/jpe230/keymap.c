@@ -18,7 +18,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MEDIA] = LAYOUT(
-                          RGB_TOG,
+                        TEST_CLOCK,
         __xxx__, KC_VOLU, __xxx__,
         __xxx__, KC_VOLD, __xxx__,
         __xxx__, KC_MUTE, __xxx__,
@@ -75,9 +75,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         __xxx__, __xxx__, __xxx__
     )
 };
-void keyboard_post_init_user(void) {
-  debug_enable=true;
-}
+
+
 
 // #ifndef OPENRGB_ENABLE
 //     #ifdef VIA_ENABLE
