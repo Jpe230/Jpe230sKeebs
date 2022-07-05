@@ -13,8 +13,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
 
-#define HAL_USE_I2C TRUE
+#include "jpe230.h"
 
-#include_next <halconf.h>
+uint8_t logged_row = 0, logged_col = 0;
+uint32_t oled_timer = 0;
+bool turn_oled_off = false;
+
+void oled_timer_reset() { oled_timer = timer_read32(); }
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    return OLED_ROTATION_270;
+}
+
+void set_keylog(uint16_t keycode, keyrecord_t *record) {
+    logged_row = record->event.key.row;
+    logged_col = record->event.key.col;
+}
+
+bool oled_task_user(void) {
+
+    turn_oled_off = false;
+    if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
+            turn_oled_off = true;
+    }
+
+    if (is_keyboard_master()) {
+        render_master_oled();
+    } else {
+        render_slave_oled();
+    }
+    return false;
+}

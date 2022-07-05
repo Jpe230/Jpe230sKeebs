@@ -1,23 +1,18 @@
-/*
-This is the c configuration file for the keymap
-
-Copyright 2012 Jun Wako <wakojun@gmail.com>
-Copyright 2015 Jack Humbert
-Copyright 2022 Jose Pablo Ramirez <jp.ramangulo@gmail.com>
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/* Copyright 2022 Jose Pablo Ramirez <jp.ramangulo@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #pragma once
 
@@ -52,13 +47,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define I2C1_SCL_PIN GP3
 #define I2C_DRIVER I2CD2
 
+/* Use Pimoroni trackball on the right/slave side */
+#define POINTING_DEVICE_RIGHT
+
+/* Enable Compile keycode (i.e. qmk compile ...) */
 #define ENABLE_COMPILE_KEYCODE
+
+/* Splits enables */
+#define SPLIT_WPM_ENABLE
+#define SPLIT_OLED_ENABLE
+#define SPLIT_POINTING_ENABLE
+
+/* Use top-left key for master or top-right key for slave enter BL */
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 0
+
+/* Tuned for my switches Boba U4T, adjust for my Gat. InkBlacks */
+#undef DEBOUNCE
+#define DEBOUNCE 1
 
 /* End RP2040 Specific configuration*/
 #ifdef RGB_MATRIX_ENABLE
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 128
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 127
 #define RGB_DISABLE_TIMEOUT OLED_TIMEOUT
 #define RGB_MATRIX_STARTUP_HUE 215
 #define RGB_MATRIX_STARTUP_SAT 255
@@ -107,13 +119,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ENABLE_RGB_MATRIX_SOLID_SPLASH
 #define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
 #endif
-
-#define SPLIT_WPM_ENABLE
-#define SPLIT_OLED_ENABLE
-
-#define BOOTMAGIC_LITE_ROW 0
-#define BOOTMAGIC_LITE_COLUMN 0
-
-#undef DEBOUNCE
-#define DEBOUNCE 1
-#define OVERRIDE_DEBOUNCE 1

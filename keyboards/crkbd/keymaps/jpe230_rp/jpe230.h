@@ -13,8 +13,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
 
-#define HAL_USE_I2C TRUE
+#include QMK_KEYBOARD_H
 
-#include_next <halconf.h>
+/* ---------------------------
+ * Pimoroni TrackBall Defines
+ * ---------------------------
+ */
+#define TRACKBALL_LED_IDX 9
+
+/* ---------------------------
+ * Pimoroni Fncs Prototypes
+ * ---------------------------
+ */
+void trackball_set_rgb(uint8_t r,uint8_t g,uint8_t b, bool adjust_brightness);
+
+/* ---------------------------
+ * Custom OLED Region
+ * ---------------------------
+ */
+extern bool turn_oled_off;
+
+/* ---------------------------
+ * Custom OLED Fncs Prototypes
+ * ---------------------------
+ */
+void render_slave_oled(void);
+void render_master_oled(void);
+void oled_timer_reset(void);
+void set_keylog(uint16_t keycode, keyrecord_t *record);

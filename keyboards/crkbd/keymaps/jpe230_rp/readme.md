@@ -9,7 +9,7 @@ The four layers:
 
 ## OLED
 - Master: Renders layer state + keylog
-- Slave : Renders an animation of a cat that varies its animation speed based on the current WPM
+- Slave : ~~Renders an animation of a cat that varies its animation speed based on the current WPM~~ TODO
 
 ## Changes vs my Pro Micro Board
 - Updated `rules.mk`:
