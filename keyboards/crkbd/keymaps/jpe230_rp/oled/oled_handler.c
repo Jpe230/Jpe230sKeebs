@@ -35,7 +35,7 @@ bool oled_task_user(void) {
 
     turn_oled_off = false;
     if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
-            turn_oled_off = true;
+        turn_oled_off = true;
     }
 
     if (is_keyboard_master()) {
