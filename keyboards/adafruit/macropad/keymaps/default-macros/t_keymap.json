@@ -1,5 +1,11 @@
 {
-  "keycodes":[],
+  "keycodes":[
+    {
+      "alias": "JP_KC",
+      "action": "\"Use escape character for macros\\n\""
+    }
+    
+  ],
   "keymap":[
     {
       "layer_label": "Macro Layer 1",
@@ -7,7 +13,7 @@
         ["9x000000", "RGBTOG", "RGB_TOG"],
         ["0x000000", "SHOWRGB" , "MC_SHWA"],
         ["0x000000", "SHOWIND" , "MC_INDI"],
-        ["0x000000", "KEY C" , "KC_C"],
+        ["0x000000", "MACRO 1" , "JP_KC"],
         ["0x000000", "KEY D" , "KC_D"],
         ["0x000000", "KEY E" , "KC_E"],
         ["0x000000", "KEY F" , "KC_F"],

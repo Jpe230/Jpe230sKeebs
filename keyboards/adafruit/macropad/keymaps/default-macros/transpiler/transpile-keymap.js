@@ -16,12 +16,70 @@
 
 
 const fs = require('fs');
+var validator = require('jsonschema').Validator;
+var v = new validator();
 
-const header_file = fs.readFileSync('./transpiler_template.h', 'utf8');
-const keymap_json = fs.readFileSync('./t_keymap.json', 'utf8');
+const header_file = fs.readFileSync(`${__dirname}/transpiler_template.h`, 'utf8');
+const keymap_json = fs.readFileSync(`${__dirname}/../t_keymap.json`, 'utf8');
 
 const keymap = JSON.parse(keymap_json);
 
+// Validate JSON
+var keycodeSchema = {
+  "type": "array",
+  "items": {
+    "properties": {
+      "alias": { "type": "string" },
+      "action": { "type": "string" }
+    },
+    "required": ["alias", "action"]
+  }
+};
+
+var layerSchema = {
+  "id": "/layer",
+  "type": "array",
+  "items": {
+    "properties": {
+      "layer_label": {"type": "string"},
+      "layer": {
+        "type": "array",
+        "items": { 
+          "propierties":{
+            "type": "array",
+            "items": {"type": "string"},
+          },
+          "minItems": 3,
+          "maxItems": 3
+        }, 
+        "minItems": 13,
+        "maxItems": 13
+      }
+    },
+    "required": [ "layer_label", "layer" ]
+  },
+  "minItems": 1,
+}
+
+let completeSchema = {
+  "id": "/keymap",
+  "type": "object",
+  "properties": {
+    "keycodes": {"$ref": "/keycode"},
+    "keymap": {"$ref": "/layer"},
+  },
+  "required": ["keymap"]
+}
+
+v.addSchema(keycodeSchema, '/keycode');
+v.addSchema(layerSchema, '/layer');
+
+let res = v.validate(keymap, completeSchema);
+
+if(!res.valid){
+  console.log(res);
+  return;
+}
 // Get layer number
 const layer_count = keymap.keymap.length;
 
@@ -96,6 +154,8 @@ new_file = new_file.replace("{{trans_keymap_string}}", keymap_string);
 new_file = new_file.replace("{{trans_indicators}}", indicators);
 new_file = new_file.replace("{{trans_keymap}}", t_keymap);
 
-fs.writeFile('./transpiler.h', new_file, 'utf-8', function (err) {
+fs.writeFile(`${__dirname}/../transpiler.h`, new_file, 'utf-8', function (err) {
   console.log(err);
 });
+
+console.log("Done!");
