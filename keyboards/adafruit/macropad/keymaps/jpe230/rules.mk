@@ -1,5 +1,5 @@
 QUANTUM_LIB_SRC += i2c_master.c
-CONSOLE_ENABLE = yes
+VIA_ENABLE = yes
 
 # Project specific files
 SRC += \

@@ -97,11 +97,16 @@ enum JP_LAYERS{
     VS,
     DISCORD,
     CONFS,
+    CONFS2,
     SECRET_LAYERS
     EMPTLAYER
 };
 
-#define LAYER_COUNT (8 + SECRET_LAYER_COUNT)
+#ifndef DYNAMIC_KEYMAP_LAYER_COUNT
+    #define LAYER_COUNT (NUMBER_OF_LAYERS + SECRET_LAYER_COUNT)
+#else
+    #define LAYER_COUNT DYNAMIC_KEYMAP_LAYER_COUNT
+#endif
 
 /* -----------------------
  * Custom Layers Prototypes
@@ -110,7 +115,7 @@ enum JP_LAYERS{
 void handle_layer_move(uint8_t layer);
 
 /* -----------------------
- * Layers Defines
+ * Layers Definesaaaa
  * -----------------------
  */
 #define ___ns____ ""
@@ -184,4 +189,4 @@ extern uint8_t indicator_state;
  * -----------------------
  */
 #define SHOW_DEFAULT 1500 // in ms
-#define RGB_IDLE_TIMEOUT 300000
+#define RGB_IDLE_TIMEOUT 60000

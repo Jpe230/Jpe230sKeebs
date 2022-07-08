@@ -14,13 +14,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* -----------------------
+ * Include secrets config
+ * -----------------------
+ */
+#ifdef ENABLE_SECRETS
+    #include "secrets/secret_config.h"
+#else
+    #define SECRET_LAYER_COUNT 0
+#endif
+
+/* Number of layers */
+#define NUMBER_OF_LAYERS 9
 
 /* Reduce max brightness and startup brightness */
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
 #define RGB_MATRIX_STARTUP_VAL 120
 
 /* Enable more than 4 layers in VIA */
-#define DYNAMIC_KEYMAP_LAYER_COUNT 10
+#define DYNAMIC_KEYMAP_LAYER_COUNT (NUMBER_OF_LAYERS + SECRET_LAYER_COUNT)
 
 /* Enable RGB Matrix Configuration in VIA */
 #define VIA_QMK_RGBLIGHT_ENABLE

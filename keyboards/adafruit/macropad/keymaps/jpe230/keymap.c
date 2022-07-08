@@ -18,7 +18,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MEDIA] = LAYOUT(
-                        TEST_CLOCK,
+                          RGB_TOG,
         __xxx__, KC_VOLU, __xxx__,
         __xxx__, KC_VOLD, __xxx__,
         __xxx__, KC_MUTE, __xxx__,
@@ -66,6 +66,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MC_OLOG, RGB_SAI, RGB_MOD,
         KC_LSFT, RGB_VAI, RGB_SPI
     ),
+    [CONFS2] = LAYOUT(
+                          RGB_TOG,
+         EE_CLR, __xxx__, __xxx__,
+        __xxx__, __xxx__, __xxx__,
+        __xxx__, __xxx__, __xxx__,
+        __xxx__, __xxx__, __xxx__
+    ),
     SECRET_KEYMAP
     [EMPTLAYER] = LAYOUT(
                           __xxx__,
@@ -77,22 +84,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-
-// #ifndef OPENRGB_ENABLE
-//     #ifdef VIA_ENABLE
-//     void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
-//     #else
-//     void raw_hid_receive(uint8_t *data, uint8_t length) {
-//     #endif
-//         /* Get command ID */
-//         uint8_t command_id = data[0];
-//         /* Get Layer, minus 10 to avoid overlapping with a VIA command */
-//         uint8_t layer = data[1] - 10;
-//         /* Command Id = 3 = via_keyboard_set */
-//         if(command_id == 3){
-//             /* Handle to move the layer */
-//             handle_layer_move(layer);
-//         }
-//     }
-// #endif
+#ifdef VIA_ENABLE
+void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+#else
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+#endif
+    /* Get command ID */
+    uint8_t command_id = data[0];
+    /* Get Layer, minus 10 to avoid overlapping with a VIA command */
+    uint8_t layer = data[1] - 10;
+    /* Command Id = 3 = via_keyboard_set */
+    if(command_id == 3){
+        /* Handle to move the layer */
+        handle_layer_move(layer);
+    }
+}
 

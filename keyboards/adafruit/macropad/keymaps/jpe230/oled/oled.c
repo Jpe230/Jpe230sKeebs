@@ -34,6 +34,7 @@ const char* PROGMEM layer_strings[] = {
     "Visual Studio",
     "Discord",
     "Configuration",
+    "Configuration 2",
     SECRET_LAYER_STRINGS
     "Empty"
 };
@@ -87,6 +88,13 @@ const char PROGMEM *key_strings[][MATRIX_ROWS][MATRIX_COLS] = {
         {"BongoC ", "RGBHUE ", "ShwAnim"},
         {"Logo"   , "RGBSAT ", "RGBMOD "},
         {"LShift ", "RGBVAL ", "RGBSPD "}
+    },
+    {
+        {___ns____, ___ns____, ___ns____},
+        {"EERESET", ___ns____, ___ns____},
+        {___ns____, ___ns____, ___ns____},
+        {___ns____, ___ns____, ___ns____},
+        {___ns____, ___ns____, ___ns____}
     },
     SECRET_KEY_STRING
     {
