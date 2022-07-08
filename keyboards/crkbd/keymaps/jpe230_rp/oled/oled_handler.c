@@ -41,7 +41,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_master_oled();
     } else {
-        render_slave_oled();
+        //render_slave_oled();
     }
     return false;
 }

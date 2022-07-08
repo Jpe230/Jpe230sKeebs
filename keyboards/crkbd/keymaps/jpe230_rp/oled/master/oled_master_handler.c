@@ -19,8 +19,23 @@
 
 extern uint8_t logged_row, logged_col;
 
+
+uint32_t layer_test = 0;
+uint8_t cur_layer = 0;
+void housekeeping_task_kb(void){
+     if (timer_elapsed32(layer_test) > 1) {
+        cur_layer++;
+        if(cur_layer >= NUMBERS_ARRAY_SIZE){
+            cur_layer = 0;
+        }
+        layer_test = timer_read32();
+    }
+
+}
+
+
 void oled_render_layer_state(void) {
-    int current_layer_idx = get_highest_layer(layer_state | default_layer_state);
+    int current_layer_idx = cur_layer;//get_highest_layer(layer_state | default_layer_state);
 
     /* Sanity check */
     if(current_layer_idx >= NUMBERS_ARRAY_SIZE)
@@ -53,7 +68,7 @@ void render_master_oled() {
     /* Print logged col and row
      * Format: 00x00
      */
-    char logged_matrix[6] = {0};
+    char logged_matrix[9] = {0};
     sprintf(logged_matrix, "%02dx%02d", logged_col, logged_row);
 
     /* Write a separator char: ◆, 

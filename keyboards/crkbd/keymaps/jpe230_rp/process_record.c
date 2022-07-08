@@ -26,8 +26,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_set_color_all(30, 0, 0);
                 rgb_matrix_driver.flush();
                 oled_off();
-                trackball_set_rgb(255, 0, 0, false);
-
                 return true;
         }
     }
