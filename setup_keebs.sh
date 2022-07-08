@@ -48,6 +48,7 @@ else
     echo 'README.md'
     echo 'keyboards/keychron/k14/keymaps/jpe230/*'
     echo 'keyboards/adafruit/macropad/keymaps/jpe230/*'
+    echo 'keyboards/adafruit/macropad/keymaps/default-macros/*'
     echo 'keyboards/crkbd/keymaps/jpe230_rp/*'
     echo 'keyboards/handwired/bigkey/*'
     echo 'keyboards/keychron/q2/q2_ansi_stm32l432_ec11/keymaps/jpe230/*'
