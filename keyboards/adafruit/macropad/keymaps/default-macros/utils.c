@@ -148,3 +148,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
+
+void matrix_scan_user(void) {
+
+    /* Hide Indicators after n seconds */
+    if(is_showing_indicators && timer_elapsed(indicators_timers) > SHOW_DEFAULT){
+        restore_indicators();
+    }
+
+    /* Set the matrix to IDLE after n seconds without input*/
+    if(!rgb_matrix_idling && timer_elapsed(rgb_idle_timer) > RGB_IDLE_TIMEOUT){
+        rgb_matrix_idling = true;
+    }
+}

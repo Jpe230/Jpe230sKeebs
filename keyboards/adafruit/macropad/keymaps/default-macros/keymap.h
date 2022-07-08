@@ -38,3 +38,10 @@ enum MACROPAD_KEYCODES {
     MC_OLOG,             // Select Logo OLED,
     TRANS_KEYCODES_ENUM
 };
+
+/* -----------------------
+ * Custom Configuration
+ * -----------------------
+ */
+#define SHOW_DEFAULT 1500
+#define RGB_IDLE_TIMEOUT 1500

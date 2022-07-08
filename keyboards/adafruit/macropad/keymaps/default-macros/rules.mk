@@ -5,6 +5,6 @@ SRC += \
     utils.c \
     rgb/rgb_handler.c \
     oled/oled_handler.c \
-    oled/animations/bongocat.c \
-    oled/animations/logo.c
+    oled/renderers/bongocat.c \
+    oled/renderers/logo.c
         
