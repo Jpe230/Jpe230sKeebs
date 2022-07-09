@@ -53,5 +53,6 @@ dkms.conf
 
 # Secrets
 secrets.*
+keys.*
 
 **/secrets/*
