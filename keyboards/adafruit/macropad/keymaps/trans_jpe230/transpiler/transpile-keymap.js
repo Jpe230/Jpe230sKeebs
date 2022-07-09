@@ -16,16 +16,28 @@
 
 
 const fs = require('fs');
-var validator = require('jsonschema').Validator;
-var v = new validator();
+let validator = require('jsonschema').Validator;
+let v = new validator();
+let use_secrets = false;
 
 const header_file = fs.readFileSync(`${__dirname}/transpiler_template.h`, 'utf8');
 const keymap_json = fs.readFileSync(`${__dirname}/../t_keymap.json`, 'utf8');
 
+const secrets_json_path = `${__dirname}/../secrets.json`;
+const secrets_template_path = `${__dirname}/keys_template.h`;
+let secrets, key_file;
+if (fs.existsSync(secrets_json_path) && fs.existsSync(secrets_template_path)) {
+  use_secrets = true;
+
+  const secret_json = fs.readFileSync(secrets_json_path, 'utf8');
+  secrets = JSON.parse(secret_json);
+
+  key_file = fs.readFileSync(secrets_template_path, 'utf8');
+}
+
 const keymap = JSON.parse(keymap_json);
 
-// Validate JSON
-var keycodeSchema = {
+const keycodeSchema = {
   "type": "array",
   "items": {
     "properties": {
@@ -36,7 +48,7 @@ var keycodeSchema = {
   }
 };
 
-var layerSchema = {
+const layerSchema = {
   "id": "/layer",
   "type": "array",
   "items": {
@@ -61,10 +73,11 @@ var layerSchema = {
   "minItems": 1,
 }
 
-let completeSchema = {
+const completeSchema = {
   "id": "/keymap",
   "type": "object",
   "properties": {
+    "totp_layer": { "type": "integer" },
     "keycodes": {"$ref": "/keycode"},
     "keymap": {"$ref": "/layer"},
   },
@@ -74,12 +87,16 @@ let completeSchema = {
 v.addSchema(keycodeSchema, '/keycode');
 v.addSchema(layerSchema, '/layer');
 
-let res = v.validate(keymap, completeSchema);
+const res = v.validate(keymap, completeSchema);
 
 if(!res.valid){
   console.log(res);
   return;
 }
+
+// Get OTP Layer
+const totp_layer = keymap.totp_layer;
+
 // Get layer number
 const layer_count = keymap.keymap.length;
 
@@ -143,7 +160,6 @@ const t_keymap = keymap.keymap.map((l, index) => {
   return `[${index}] = LAYOUT(${keys})`;
 }).join();
 
-
 // Replace layer no
 let new_file;
 new_file = header_file.replace("{{trans_layer_no}}", layer_count);
@@ -153,9 +169,24 @@ new_file = new_file.replace("{{trans_layer_string}}", layer_string);
 new_file = new_file.replace("{{trans_keymap_string}}", keymap_string);
 new_file = new_file.replace("{{trans_indicators}}", indicators);
 new_file = new_file.replace("{{trans_keymap}}", t_keymap);
+new_file = new_file.replace("{{totp_layer}}", totp_layer);
 
 fs.writeFile(`${__dirname}/../transpiler.h`, new_file, 'utf-8', function (err) {
-  console.log(err);
+  if(err)
+    console.log(err);
 });
+
+if(use_secrets) {
+  let new_sfile;
+  new_sfile = key_file.replace("{{totp_keys}}", secrets.keys.join());
+  new_sfile = new_sfile.replace("{{password}}", `"${secrets.password}"`);
+  new_sfile = new_sfile.replace("{{password_len}}", secrets.password.length);
+
+  fs.writeFile(`${__dirname}/../keys.h`, new_sfile, 'utf-8', function (err) {
+    if(err)
+      console.log(err);
+  });
+  
+}
 
 console.log("Done!");

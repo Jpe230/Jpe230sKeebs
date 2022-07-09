@@ -17,6 +17,7 @@
 #pragma once
 
 #include "i2c_master.h"
+#include "../security/sha1/sha1.h"
 
 
 /**

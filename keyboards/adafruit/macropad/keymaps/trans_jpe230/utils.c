@@ -90,6 +90,12 @@ void cycle_layer(bool next) {
         layer_idx = 0;
     else if(layer_idx < 0)
         layer_idx = layer_count - 1;
+
+    if(layer_idx == TOTP_LAYER)
+    {
+        layer_idx += next ?  1 : -1;\
+        uprintf("Skipped AUTH LAYER: %d, going to layer %d\n", AUTHENTICATOR, layer_idx);
+    }
     
     /* Move the Layer */
     handle_layer_move(layer_idx);
@@ -120,6 +126,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         fake_wpm_increment();
         switch (keycode) {
             TRANS_CUSTOM_KEYCODES
+            case LS_BTN1 ... LS_BACK:
+                handle_passcode(keycode);
+                break;
+            case OTPBTN0 ... OTPBTN9:
+                handle_TOPT(keycode);
+                break;
             case MC_INDI:
                 desired_indicator_state = DEFAULT_INDI;
                 restore_indicators();

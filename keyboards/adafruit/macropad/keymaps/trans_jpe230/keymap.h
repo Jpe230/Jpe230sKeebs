@@ -18,9 +18,12 @@
 
 #include QMK_KEYBOARD_H
 
+#include "i2c_master.h"
 #include "transpiler.h"
+#include "lib/ds3231/ds3231.h"
 #include "oled/oled_handler.h"
 #include "rgb/rgb_handler.h"
+#include "otp/otp.h"
 
 #ifdef VIA_ENABLE
     #define USER_START USER00
@@ -36,6 +39,27 @@ enum MACROPAD_KEYCODES {
     MC_ODEF,             // Select Default OLED
     MC_OBNC,             // Select Bongo Cat OLED
     MC_OLOG,             // Select Logo OLED,
+    LS_BTN0,             // Lockscreen Button 0
+    LS_BTN1,             // Lockscreen Button 1
+    LS_BTN2,             // Lockscreen Button 2
+    LS_BTN3,             // Lockscreen Button 3
+    LS_BTN4,             // Lockscreen Button 4
+    LS_BTN5,             // Lockscreen Button 5
+    LS_BTN6,             // Lockscreen Button 6
+    LS_BTN7,             // Lockscreen Button 7
+    LS_BTN8,             // Lockscreen Button 8
+    LS_BTN9,             // Lockscreen Button 9
+    LS_BACK,             // Lockscreen BackSpace
+    OTPBTN0,             // OTP Button 0
+    OTPBTN1,             // OTP Button 1
+    OTPBTN2,             // OTP Button 2
+    OTPBTN3,             // OTP Button 3
+    OTPBTN4,             // OTP Button 4
+    OTPBTN5,             // OTP Button 5
+    OTPBTN6,             // OTP Button 6
+    OTPBTN7,             // OTP Button 7
+    OTPBTN8,             // OTP Button 8
+    OTPBTN9,             // OTP Button 9
     TRANS_KEYCODES_ENUM
 };
 
@@ -45,3 +69,9 @@ enum MACROPAD_KEYCODES {
  */
 #define SHOW_DEFAULT 1500
 #define RGB_IDLE_TIMEOUT 60000
+
+/* -----------------------
+ * Prototypes
+ * -----------------------
+ */
+void handle_layer_move(uint8_t layer);

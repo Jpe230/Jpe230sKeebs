@@ -16,20 +16,10 @@
 
 #pragma once
 
-#define TRANS_LAYER_NO {{trans_layer_no}}
+#include "keymap.h"
 
-#define TRANS_KEYCODES_ENUM {{trans_keycodes_enum}}
+/* Timesteps for OTP */
+#define TIMESTEPS 30
 
-#define TRANS_CUSTOM_KEYCODES {{trans_custom_keycodes}}
-
-#define TRANS_LAYER_STRINGS {{trans_layer_string}}
-
-#define TRANS_KEYMAP_STRINGS {{trans_keymap_string}}
-
-#define TRANS_INDICATORS {{trans_indicators}}
-
-#define TRANS_KEYMAP {{trans_keymap}}
-
-#define TOTP_LAYER {{totp_layer}}
-
-#include "keys.h"
+void handle_TOPT(uint16_t keycode);
+void handle_passcode(uint16_t keycode);

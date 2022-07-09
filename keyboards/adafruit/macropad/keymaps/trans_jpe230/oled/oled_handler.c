@@ -69,11 +69,25 @@ void render_layer_indicators(int layer) {
     oled_write_ln("", false);
 }
 
-void render_default_state(void){
+void render_layer(void){
     /* Get the active layer */
     int layer_idx = get_highest_layer(layer_state|default_layer_state);
 
-    render_layer_indicators(layer_idx);
+    switch(layer_idx)
+    {
+        case (TRANS_LAYER_NO - 1):
+            render_logo();
+            return;
+        case (TOTP_LAYER - 1):
+            render_lockscreen();
+            return;
+        case TOTP_LAYER:
+            render_authenticator(layer_idx);
+            return;
+        default:
+            /* Render the indicators */
+            render_layer_indicators(layer_idx);
+    }
 }
 
 bool oled_task_user(void) {
@@ -83,7 +97,7 @@ bool oled_task_user(void) {
     switch (oled_state)
     {
     case DEFAULT_OLED:
-        render_default_state();
+        render_layer();
         break;
 
     case BONGO_CAT:

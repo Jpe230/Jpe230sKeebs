@@ -42,6 +42,8 @@ void render_anim(void);
 void render_wpm(void);
 void render_logo(void);
 void render_bongo_cat(void);
+void render_authenticator(int layer);
+void render_lockscreen(void);
 
 extern uint8_t oled_state;
 extern bool indicator_oled_state[MATRIX_ROWS][MATRIX_COLS];

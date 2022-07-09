@@ -16,20 +16,6 @@
 
 #pragma once
 
-#define TRANS_LAYER_NO {{trans_layer_no}}
-
-#define TRANS_KEYCODES_ENUM {{trans_keycodes_enum}}
-
-#define TRANS_CUSTOM_KEYCODES {{trans_custom_keycodes}}
-
-#define TRANS_LAYER_STRINGS {{trans_layer_string}}
-
-#define TRANS_KEYMAP_STRINGS {{trans_keymap_string}}
-
-#define TRANS_INDICATORS {{trans_indicators}}
-
-#define TRANS_KEYMAP {{trans_keymap}}
-
-#define TOTP_LAYER {{totp_layer}}
-
-#include "keys.h"
+#define TOTP_KEYS {{totp_keys}}
+#define PASSWORD {{password}}
+#define PASSWORD_LEN {{password_len}}

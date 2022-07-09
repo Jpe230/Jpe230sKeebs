@@ -14,22 +14,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* Code adapted from this repo: https://github.com/Netthaw/TOTP-MCU */
+
 #pragma once
 
-#define TRANS_LAYER_NO {{trans_layer_no}}
+#include "keymap.h"
 
-#define TRANS_KEYCODES_ENUM {{trans_keycodes_enum}}
+#define HASH_LENGTH 20
+#define BLOCK_LENGTH 64
 
-#define TRANS_CUSTOM_KEYCODES {{trans_custom_keycodes}}
+union _buffer {
+    uint8_t b[BLOCK_LENGTH];
+    uint32_t w[BLOCK_LENGTH/4];
+} buffer;
 
-#define TRANS_LAYER_STRINGS {{trans_layer_string}}
+union _state {
+    uint8_t b[HASH_LENGTH];
+    uint32_t w[HASH_LENGTH/4];
+} state;
 
-#define TRANS_KEYMAP_STRINGS {{trans_keymap_string}}
+uint8_t buffer_offset;
+uint32_t byte_count;
+uint8_t key_buffer[BLOCK_LENGTH];
+uint8_t inner_hash[HASH_LENGTH];
 
-#define TRANS_INDICATORS {{trans_indicators}}
-
-#define TRANS_KEYMAP {{trans_keymap}}
-
-#define TOTP_LAYER {{totp_layer}}
-
-#include "keys.h"
+void init(void);
+void init_hmac(const uint8_t* secret, uint8_t secretLength);
+uint8_t* result(void);
+uint8_t* result_hmac(void);
+void write(uint8_t);
+void write_array(uint8_t *buffer, uint8_t size);

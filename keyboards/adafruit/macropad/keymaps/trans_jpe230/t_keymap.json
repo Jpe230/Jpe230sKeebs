@@ -1,9 +1,10 @@
 {
+  "totp_layer": 9,
   "keymap":[
     {
       "layer_label": "Media Controls",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0x000000",        "",   "KC_NO"],
         ["0xfc035a",  "Vol. +", "KC_VOLU"],
         ["0x000000",        "",   "KC_NO"],
@@ -21,7 +22,7 @@
     {
       "layer_label": "Teams Macros",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0xfc035a",  "Vol. +", "KC_VOLU"],
         ["0x2ee634", "Accpt C",  "TM_AVC"],
         ["0xff0a58", " Mute M",  "TM_MUT"],
@@ -39,7 +40,7 @@
     {
       "layer_label": "Edge Macros",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0x9f36f5",  "Zoom +",  "ED_ZOP"],
         ["0x9f36f5", "New Tab", "ED_NEWT"],
         ["0xfc035a", " Vol. +", "KC_VOLU"],
@@ -57,7 +58,7 @@
     {
       "layer_label": "VSCode Macros",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0x9f36f5",  "Zoom +",  "ED_ZOP"],
         ["0x000000",        "",   "KC_NO"],
         ["0xfc035a", "Sidebar",   "VS_SB"],
@@ -75,7 +76,7 @@
     {
       "layer_label": "Visual Studio",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0xfc035a",  "Zoom +",  "VS_ZOP"],
         ["0x8ae6b5",  "RunDbg",   "KC_F5"],
         ["0x000000",        "",   "KC_NO"],
@@ -93,7 +94,7 @@
     {
       "layer_label": "Discord",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0xdb043e", "Acpt C ",   "DC_AC"],
         ["0x0f3efa", "PrvMsg ", "DC_PUCM"],
         ["0x0f3efa",  "NxtMsg", "DC_NUCM"],
@@ -111,7 +112,7 @@
     {
       "layer_label": "Configuration",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0x0ffaf6", "IndOLED", "MC_ODEF"],
         ["0x0ffaf6", "TgIndi ", "MC_INDI"],
         ["0x0ffaf6", "MskAnim", "MC_MSKI"],
@@ -129,8 +130,62 @@
     {
       "layer_label": "Configuration",
       "layer": [
-        ["9x000000", "RGB TOG", "RGB_TOG"],
+        ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0xff0000", "EERESET",  "EE_CLR"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"]
+      ]
+    },
+    {
+      "layer_label": "Lockscreen",
+      "layer": [
+        ["0x000000",        "", "RGB_TOG"],
+        ["0x505050",        "", "LS_BTN7"],
+        ["0x505050",        "", "LS_BTN8"],
+        ["0x505050",        "", "LS_BTN9"],
+        ["0x505050",        "", "LS_BTN4"],
+        ["0x505050",        "", "LS_BTN5"],
+        ["0x505050",        "", "LS_BTN6"],
+        ["0x505050",        "", "LS_BTN1"],
+        ["0x505050",        "", "LS_BTN2"],
+        ["0x505050",        "", "LS_BTN3"],
+        ["0x505050",        "", "LS_BTN0"],
+        ["0x505050",        "", "LS_BTN0"],
+        ["0x500000",        "", "LS_BACK"]
+      ]
+    },
+    {
+      "layer_label": "TOPT",
+      "layer": [
+        ["0x000000",        "",   "KC_NO"],
+        ["0x505050",      "FB", "OTPBTN0"],
+        ["0x505050",  "Google", "OTPBTN1"],
+        ["0x505050", "Twitter", "OTPBTN2"],
+        ["0x505050",      "IG", "OTPBTN3"],
+        ["0x505050",   "HMail", "OTPBTN4"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"],
+        ["0x000000",        "",   "KC_NO"]
+      ]
+    },
+    {
+      "layer_label": "Empty",
+      "layer": [
+        ["0x000000",        "", "RGB_TOG"],
+        ["0x000000",        "",   "KC_NO"],
         ["0x000000",        "",   "KC_NO"],
         ["0x000000",        "",   "KC_NO"],
         ["0x000000",        "",   "KC_NO"],
