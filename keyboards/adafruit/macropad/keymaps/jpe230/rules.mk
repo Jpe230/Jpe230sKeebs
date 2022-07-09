@@ -1,22 +1,17 @@
-QUANTUM_LIB_SRC += i2c_master.c
-VIA_ENABLE = yes
+#VIA_ENABLE = yes
 
 # Project specific files
 SRC += \
-    jpe230.c \
-    rgb/indicators.c \
-    oled/oled.c \
-    oled/bongocat.c \
-    oled/lockscreen_oled.c \
-    oled/logo.c \
-    lib/ds3231/ds3231.c
-
-# Enable secrets (by design the public version doesnt include those files)
-ifeq ($(strip $(DEF)), ENABLE_SECRETS)
-    OPT_DEFS += -D${DEF}
-    SRC += \
-        secrets/lockscreen.c \
-        secrets/sha1.c \
-        secrets/totp.c
-endif
+    utils.c \
+    rgb/rgb_handler.c \
+    oled/oled_handler.c \
+    oled/renderers/bongocat.c \
+    oled/renderers/logo.c \
+    oled/renderers/otp.c \
+    oled/renderers/lockscreen.c \
+    otp/otp.c \
+    otp/password_validator.c \
+    lib/ds3231/ds3231.c \
+    lib/security/sha1/sha1.c \
         
+QUANTUM_LIB_SRC += i2c_master.c
