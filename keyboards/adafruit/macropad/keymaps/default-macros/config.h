@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "transpiler.h"
+
 /* Reduce max brightness and startup brightness */
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
 #define RGB_MATRIX_STARTUP_VAL 120
