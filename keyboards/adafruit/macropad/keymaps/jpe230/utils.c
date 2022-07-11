@@ -156,6 +156,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 desired_oled_state = LOGO;
                 restore_indicators();
                 break;
+            case QK_BOOT:
+                rgb_matrix_set_color_all(30, 0, 0);
+                rgb_matrix_driver.flush();
+                oled_off();
+                return true;
         }
     }
     return true;
@@ -171,5 +176,21 @@ void matrix_scan_user(void) {
     /* Set the matrix to IDLE after n seconds without input*/
     if(!rgb_matrix_idling && timer_elapsed(rgb_idle_timer) > RGB_IDLE_TIMEOUT){
         rgb_matrix_idling = true;
+    }
+}
+
+#ifdef VIA_ENABLE
+void raw_hid_receive_kb(uint8_t *data, uint8_t length) {
+#else
+void raw_hid_receive(uint8_t *data, uint8_t length) {
+#endif
+    /* Get command ID */
+    uint8_t command_id = data[0];
+    /* Get Layer, minus 10 to avoid overlapping with a VIA command */
+    uint8_t layer = data[1] - 10;
+    /* Command Id = 3 = via_keyboard_set */
+    if(command_id == 3){
+        /* Handle to move the layer */
+        handle_layer_move(layer);
     }
 }

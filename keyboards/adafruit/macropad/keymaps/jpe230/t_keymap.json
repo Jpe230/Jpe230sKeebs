@@ -132,8 +132,8 @@
       "layer": [
         ["0x000000", "RGB TOG", "RGB_TOG"],
         ["0xff0000", "EERESET",  "EE_CLR"],
-        ["0x000000",        "",   "KC_NO"],
-        ["0x000000",        "",   "KC_NO"],
+        ["0x00ff00",    "Make", "QK_MAKE"],
+        ["0x0000ff",    "Boot", "QK_BOOT"],
         ["0x000000",        "",   "KC_NO"],
         ["0x000000",        "",   "KC_NO"],
         ["0x000000",        "",   "KC_NO"],

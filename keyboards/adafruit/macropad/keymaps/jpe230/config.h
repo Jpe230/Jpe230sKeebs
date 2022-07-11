@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "transpiler.h"
+
 /* Reduce max brightness and startup brightness */
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
 #define RGB_MATRIX_STARTUP_VAL 120
@@ -24,6 +26,9 @@
 /* Enable more than 4 layers in VIA */
 // Fix this
 #define DYNAMIC_KEYMAP_LAYER_COUNT NUMBER_OF_LAYERS
+
+/* Enable Compile keycode (i.e. qmk compile ...) */
+#define ENABLE_COMPILE_KEYCODE
 
 /* Enable RGB Matrix Configuration in VIA */
 #define VIA_QMK_RGBLIGHT_ENABLE

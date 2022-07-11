@@ -1,4 +1,4 @@
-#VIA_ENABLE = yes
+VIA_ENABLE = yes
 
 # Project specific files
 SRC += \
