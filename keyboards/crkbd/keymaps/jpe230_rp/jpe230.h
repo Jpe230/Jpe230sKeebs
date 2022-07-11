@@ -19,18 +19,6 @@
 #include QMK_KEYBOARD_H
 
 /* ---------------------------
- * Pimoroni TrackBall Defines
- * ---------------------------
- */
-#define TRACKBALL_LED_IDX 9
-
-/* ---------------------------
- * Pimoroni Fncs Prototypes
- * ---------------------------
- */
-void trackball_set_rgb(uint8_t r,uint8_t g,uint8_t b, bool adjust_brightness);
-
-/* ---------------------------
  * Custom OLED Region
  * ---------------------------
  */

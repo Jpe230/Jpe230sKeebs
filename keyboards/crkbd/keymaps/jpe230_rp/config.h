@@ -47,9 +47,6 @@
 #define I2C1_SCL_PIN GP3
 #define I2C_DRIVER I2CD2
 
-/* Use Pimoroni trackball on the right/slave side */
-#define POINTING_DEVICE_RIGHT
-
 /* Enable Compile keycode (i.e. qmk compile ...) */
 #define ENABLE_COMPILE_KEYCODE
 
