@@ -31,7 +31,7 @@ union _buffer {
 union _state {
     uint8_t b[HASH_LENGTH];
     uint32_t w[HASH_LENGTH/4];
-} state;
+} sha1_state;
 
 uint8_t buffer_offset;
 uint32_t byte_count;

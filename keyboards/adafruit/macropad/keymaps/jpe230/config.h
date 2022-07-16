@@ -24,7 +24,6 @@
 #define NUMBER_OF_LAYERS TRANS_LAYER_NO
 
 /* Enable more than 4 layers in VIA */
-// Fix this
 #define DYNAMIC_KEYMAP_LAYER_COUNT NUMBER_OF_LAYERS
 
 /* Enable Compile keycode (i.e. qmk compile ...) */

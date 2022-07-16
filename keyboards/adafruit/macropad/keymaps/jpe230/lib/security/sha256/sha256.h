@@ -18,8 +18,15 @@
 
 #include "keymap.h"
 
-/* Timesteps for OTP */
-#define TIMESTEPS 30
+#define SHA256_BLOCK_SIZE 32
 
-void handle_TOPT(uint16_t keycode);
-void handle_passcode(uint16_t keycode);
+typedef struct {
+	char data[64];
+	uint32_t datalen;
+	uint64_t bitlen;
+	uint32_t sha256_state[8];
+} SHA256_CTX;
+
+void sha256_init(SHA256_CTX *ctx);
+void sha256_update(SHA256_CTX *ctx, const char data[], size_t len);
+void sha256_final(SHA256_CTX *ctx, char hash[]);

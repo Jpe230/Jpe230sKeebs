@@ -18,8 +18,5 @@
 
 #include "keymap.h"
 
-/* Timesteps for OTP */
-#define TIMESTEPS 30
-
-void handle_TOPT(uint16_t keycode);
-void handle_passcode(uint16_t keycode);
+void AES_ECB_encrypt(const uint8_t* input, const uint8_t* key, uint8_t *output, const uint32_t length);
+void AES_ECB_decrypt(const uint8_t* input, const uint8_t* key, uint8_t *output, const uint32_t length);

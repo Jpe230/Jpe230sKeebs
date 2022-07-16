@@ -15,13 +15,23 @@
  */
 
 #include "otp.h"
+#include "../lib/security/sha256/sha256.h"
 
 char user_input[PASSWORD_LEN + 1] = {0};
 uint8_t passcode_pos = 0;
-const char* PROGMEM passcode = PASSWORD;
+char hashed[SHA256_BLOCK_SIZE] = {PASSWORD};
 
 void validate_passcode(void) {
-    if(strcmp(user_input, passcode) == 0) {
+    char buf[SHA256_BLOCK_SIZE];
+
+    SHA256_CTX ctx;
+    sha256_init(&ctx);
+    sha256_update(&ctx, user_input, strlen(user_input));
+    sha256_final(&ctx, buf);
+
+    bool result = !memcmp(hashed, buf, SHA256_BLOCK_SIZE);
+    
+    if(result) {
         /* Move to the authenticator layer if password correct */
         handle_layer_move(TOTP_LAYER);
     }

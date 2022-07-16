@@ -17,7 +17,6 @@
 #include "keymap.h"
 
 /* Count of Layers */
-// Fix this
 static uint8_t layer_count = NUMBER_OF_LAYERS;
 
 /* Desired states */
@@ -29,6 +28,8 @@ bool is_showing_indicators = false;
 bool rgb_matrix_idling = false;
 static uint16_t indicators_timers;
 static uint16_t rgb_idle_timer;
+
+extern char user_input[PASSWORD_LEN + 1];
 
 /* Show temporarly the indicators */
 void temp_show_indicators(void) {
@@ -47,8 +48,8 @@ void temp_show_indicators(void) {
     indicators_timers = timer_read();
 }
 
+/* Return states to the desired states */
 void restore_indicators(void) {
-    /* Return states to the original states */
     oled_state = desired_oled_state;
     indicator_state = desired_indicator_state;
 
@@ -62,11 +63,17 @@ void handle_layer_move(uint8_t layer) {
 
     /* If we are not in the layer and the layer is valid */
     if(layer != layer_idx && layer < layer_count){
+
+        if(layer == TOTP_LAYER) {
+            memset(user_input, 0, PASSWORD_LEN + 1);
+            dprintf("Clearing user password from RAM\n");
+        }
+
         /* Move the Layer to the desired one */
-        uprintf("Moving layer to: %d number of layer: %d\n", layer, layer_count);
+        dprintf("Moving layer to: %d number of layer: %d\n", layer, layer_count);
         layer_move(layer);
 
-        /* Reset IDLING status and timer */
+        /* Reset idling status and timer */
         rgb_idle_timer = timer_read();
         rgb_matrix_idling = false;
 
@@ -93,8 +100,8 @@ void cycle_layer(bool next) {
 
     if(layer_idx == TOTP_LAYER)
     {
-        layer_idx += next ?  1 : -1;\
-        uprintf("Skipped AUTH LAYER: %d, going to layer %d\n", AUTHENTICATOR, layer_idx);
+        layer_idx += next ?  1 : -1;
+        dprintf("Skipped AUTH LAYER: %d, going to layer %d\n", TOTP_LAYER, layer_idx);
     }
     
     /* Move the Layer */

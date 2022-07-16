@@ -15,12 +15,47 @@
  */
 
 #include "otp.h"
+#include "../lib/security/aes128/aes128.h"
 
-uint8_t PROGMEM keys[][20] = {
+uint8_t PROGMEM keys[][32] = {
     TOTP_KEYS
 };
 
 char otp_string[10];
+extern char user_input[PASSWORD_LEN + 1];
+
+static void phex(uint8_t* str)
+{
+    unsigned char i;
+    for(i = 0; i < 16; ++i)
+        printf("%.2x", str[i]);
+    printf("\n");
+}
+
+void decrypt_key(uint8_t* encrypted_key, uint8_t* decrypted_key) {
+    uint8_t key[16], text2decipher[32];
+
+    memset(decrypted_key, 0, 32);
+    
+    memset(text2decipher, 0, 32);
+    memcpy(text2decipher, encrypted_key, 32);
+
+    memset(key, 0, 16);
+    memcpy(key, user_input, PASSWORD_LEN);
+
+    dprintf("key:\n");
+    phex(key);
+    dprintf("User Input:\n");
+    phex((uint8_t*)user_input);
+    
+    for(int i = 0; i < 2; ++i)
+    {
+        AES_ECB_decrypt(text2decipher + (i*16), key, decrypted_key+(i*16), 16);
+    }
+
+    dprintf("Resulted Key:\n");
+    phex((uint8_t*)decrypted_key);
+}
 
 uint32_t generate_topt(uint8_t hmac_key) {
     ds3231_time_t t;
@@ -41,7 +76,8 @@ uint32_t generate_topt(uint8_t hmac_key) {
     byte_array[7] = (uint8_t)((steps & 0XFF));
 
     // STEP 1, get the HMAC-SHA1 hash from counter and key
-    uint8_t* key = keys[hmac_key];
+    uint8_t key[32];
+    decrypt_key(keys[hmac_key], key);
     init_hmac(key, 20);
     write_array(byte_array, 8);
     uint8_t* hash = result_hmac();

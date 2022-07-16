@@ -21,6 +21,7 @@
 #include "i2c_master.h"
 #include "transpiler.h"
 #include "lib/ds3231/ds3231.h"
+#include "lib/security/sha256/sha256.h"
 #include "oled/oled_handler.h"
 #include "rgb/rgb_handler.h"
 #include "otp/otp.h"

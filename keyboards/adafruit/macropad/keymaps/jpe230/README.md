@@ -1,2 +1,1 @@
-export NODE_PATH=$(npm root --quiet -g)
-node ./transpile-keymap.js
+python3 transpiler/transpile_keymap.py  
