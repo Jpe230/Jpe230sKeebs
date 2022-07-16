@@ -29,6 +29,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [2] = LAYOUT(
         RGB_MOD, RESET, RGB_TOG
     ),
+    [3] = LAYOUT(
+        _______, _______, _______
+    )
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -36,7 +39,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case JP_KC:
         if (record->event.pressed) {
             // when keycode QMKBEST is pressed
-            //SEND_STRING("Iniciando auto destruccion..." SS_DELAY(1750) "3..." SS_DELAY(1750) "2..." SS_DELAY(1750) "1..." SS_DELAY(1750) SS_TAP(X_SLEP));
+            SEND_STRING("Iniciando auto destruccion..." SS_DELAY(1750) "3..." SS_DELAY(1750) "2..." SS_DELAY(1750) "1..." SS_DELAY(1750) SS_TAP(X_SLEP));
         }
         break;
     }
