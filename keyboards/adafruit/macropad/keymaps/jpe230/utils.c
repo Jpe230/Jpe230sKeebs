@@ -64,7 +64,7 @@ void handle_layer_move(uint8_t layer) {
     /* If we are not in the layer and the layer is valid */
     if(layer != layer_idx && layer < layer_count){
 
-        if(layer == TOTP_LAYER) {
+        if(layer_idx == TOTP_LAYER) {
             memset(user_input, 0, PASSWORD_LEN + 1);
             dprintf("Clearing user password from RAM\n");
         }
