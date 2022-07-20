@@ -32,4 +32,8 @@
 
 #define TOTP_LAYER {{totp_layer}}
 
-#include "keys.h"
+#if (__has_include("keys.h"))
+    #include "keys.h"
+#else
+    #define DISABLE_SECRETS
+#endif

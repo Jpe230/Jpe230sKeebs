@@ -16,6 +16,9 @@
 
 #include "keymap.h"
 
+__attribute__ ((weak)) void render_lockscreen(){}
+__attribute__ ((weak)) void render_authenticator(int layer){}
+
 uint8_t oled_state = DEFAULT_OLED;
 
 bool indicator_oled_state[MATRIX_ROWS][MATRIX_COLS] = {
@@ -65,7 +68,6 @@ void render_layer_indicators(int layer) {
     center_text(layer_strings[layer], title, CHARS_PER_LINE);
     oled_write_ln((const char *)title, true);
 
-
     /* Print Keys */
     for(uint8_t row = 1; row < MATRIX_ROWS; row++)
     {
@@ -91,12 +93,14 @@ void render_layer(void){
         case (TRANS_LAYER_NO - 1):
             render_logo();
             return;
+        #ifndef DISABLE_SECRETS
         case (TOTP_LAYER - 1):
             render_lockscreen();
             return;
         case TOTP_LAYER:
             render_authenticator(layer_idx);
             return;
+        #endif
         default:
             /* Render the indicators */
             render_layer_indicators(layer_idx);

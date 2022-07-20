@@ -32,4 +32,8 @@
 
 #define TOTP_LAYER 9
 
-#include "keys.h"
+#if (__has_include("keys.h"))
+    #include "keys.h"
+#else
+    #define DISABLE_SECRETS
+#endif

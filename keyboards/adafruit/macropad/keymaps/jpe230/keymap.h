@@ -21,10 +21,12 @@
 #include "i2c_master.h"
 #include "transpiler.h"
 #include "lib/ds3231/ds3231.h"
-#include "lib/security/sha256/sha256.h"
 #include "oled/oled_handler.h"
 #include "rgb/rgb_handler.h"
-#include "otp/otp.h"
+
+#ifdef DISABLE_SECRETS
+    #define PASSWORD_LEN 0
+#endif
 
 #ifdef VIA_ENABLE
     #define USER_START USER00

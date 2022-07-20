@@ -29,7 +29,11 @@ bool rgb_matrix_idling = false;
 static uint16_t indicators_timers;
 static uint16_t rgb_idle_timer;
 
+#ifndef DISABLE_SECRETS
 extern char user_input[PASSWORD_LEN + 1];
+#endif
+__attribute__ ((weak)) void handle_TOPT(uint16_t keycode){}
+__attribute__ ((weak)) void handle_passcode(uint16_t keycode){}
 
 /* Show temporarly the indicators */
 void temp_show_indicators(void) {
@@ -66,10 +70,12 @@ void handle_layer_move(uint8_t layer) {
     /* If we are not in the layer and the layer is valid */
     if(layer != layer_idx && layer < layer_count){
 
+        #ifndef DISABLE_SECRETS
         if(layer_idx == TOTP_LAYER) {
             memset(user_input, 0, PASSWORD_LEN + 1);
             dprintf("Clearing user password from RAM\n");
         }
+        #endif
 
         /* Move the Layer to the desired one */
         dprintf("Moving layer to: %d number of layer: %d\n", layer, layer_count);
@@ -100,12 +106,14 @@ void cycle_layer(bool next) {
     else if(layer_idx < 0)
         layer_idx = layer_count - 1;
 
+    #ifndef DISABLE_SECRETS
     if(layer_idx == TOTP_LAYER)
     {
         layer_idx += next ?  1 : -1;
         dprintf("Skipped AUTH LAYER: %d, going to layer %d\n", TOTP_LAYER, layer_idx);
     }
-    
+    #endif
+
     /* Move the Layer */
     handle_layer_move(layer_idx);
 }
@@ -135,12 +143,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         fake_wpm_increment();
         switch (keycode) {
             TRANS_CUSTOM_KEYCODES
+            #ifndef DISABLE_SECRETS
             case LS_BTN1 ... LS_BACK:
                 handle_passcode(keycode);
                 break;
             case OTPBTN0 ... OTPBTN9:
                 handle_TOPT(keycode);
                 break;
+            #endif
             case MC_INDI:
                 desired_indicator_state = DEFAULT_INDI;
                 restore_indicators();
