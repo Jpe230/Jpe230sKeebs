@@ -35,13 +35,14 @@ else
 
 fi
 
-if grep -Fxq "# jpe230 excludes" $EXCLUDE; then
-  echo '.git/info/excludes already modified!'
-else
-  echo '.git/info/excludes not modified!'
-
+# if grep -Fxq "# jpe230 excludes" $EXCLUDE; then
+#   echo '.git/info/excludes already modified!'
+# else
+#   echo '.git/info/excludes not modified!'
+  echo 'Modifying .git/info/excludes'
+  rm $EXCLUDE
+  touch $EXCLUDE
   {
-    echo ''
     echo '# jpe230 excludes'
     echo ''
     echo 'LICENSE'
@@ -52,8 +53,9 @@ else
     echo 'keyboards/crkbd/keymaps/jpe230_rp/*'
     echo 'keyboards/handwired/bigkey/*'
     echo 'keyboards/keychron/q2/q2_ansi_stm32l432_ec11/keymaps/jpe230/*'
-  } >>$EXCLUDE
+    echo 'keyboards/nullbitsco/tidbit/keymaps/aspect/*'
+  } >> $EXCLUDE
 
-fi
+# fi
 
 echo 'Done! Have fun'

@@ -57,6 +57,8 @@ void restore_indicators(void) {
     is_showing_indicators = false;
 }
 
+float song_lsrs[][2] = SONG(QWERTY_SOUND);
+
 void handle_layer_move(uint8_t layer) {
     /* Get Layer */
     int layer_idx = get_highest_layer(layer_state|default_layer_state);

@@ -51,9 +51,8 @@
 #define ENABLE_COMPILE_KEYCODE
 
 /* Splits enables */
-#define SPLIT_WPM_ENABLE
-#define SPLIT_OLED_ENABLE
-#define SPLIT_POINTING_ENABLE
+// #define SPLIT_WPM_ENABLE
+// #define SPLIT_OLED_ENABLE
 
 /* Use top-left key for master or top-right key for slave enter BL */
 #define BOOTMAGIC_LITE_ROW 0

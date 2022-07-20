@@ -15,6 +15,7 @@
  */
 
 #include "jpe230.h"
+#include "oled/slave/ocean_dream.h"
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
@@ -27,6 +28,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_driver.flush();
                 oled_off();
                 return true;
+        }
+        if (!is_keyboard_master() && (keycode == KC_LCTL || keycode == KC_RCTL)) {
+            is_calm = (record->event.pressed) ? true : false;
         }
     }
     return true;

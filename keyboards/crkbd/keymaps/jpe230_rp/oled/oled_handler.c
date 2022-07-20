@@ -23,6 +23,9 @@ bool turn_oled_off = false;
 void oled_timer_reset() { oled_timer = timer_read32(); }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (!is_keyboard_master()) {
+        return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+    }
     return OLED_ROTATION_270;
 }
 
@@ -41,7 +44,7 @@ bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_master_oled();
     } else {
-        //render_slave_oled();
+        render_slave_oled();
     }
     return false;
 }

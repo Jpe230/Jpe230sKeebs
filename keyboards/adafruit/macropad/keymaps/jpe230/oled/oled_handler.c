@@ -48,13 +48,26 @@ void center_text(const char *text, char *output, int width) {
 }
 
 void render_layer_indicators(int layer) {
-    /* Print Title */
+   
+    /* Print Time */
+    ds3231_time_t t;
+    ds3231_get_time(&t);
+    
+    //dd/mm/yyyy hh:mm:ss
+    char current_time[27] = {0};
+    sprintf(current_time, "%02d/%02d/%04d %02d:%02d:%02d", t.month, t.date, t.year, t.hour, t.minute, t.second);
+    char time_text[21];
+    center_text(current_time, time_text, CHARS_PER_LINE);
+    oled_write((const char*)time_text, true);
+
+     /* Print Title */
     char title[CHARS_PER_LINE];
     center_text(layer_strings[layer], title, CHARS_PER_LINE);
     oled_write_ln((const char *)title, true);
 
+
     /* Print Keys */
-    for(uint8_t row = 0; row < MATRIX_ROWS; row++)
+    for(uint8_t row = 1; row < MATRIX_ROWS; row++)
     {
         for(uint8_t col = 0; col < MATRIX_COLS; col++)
         {

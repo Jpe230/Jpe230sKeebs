@@ -164,7 +164,6 @@ if use_secrets:
     hashed_pass = ','.join(f'0x{secrets["password"][x:x+2]}' for x in range(0, len(secrets["password"]), 2))
     otp_hashed_keys = ','.join(f"{{{','.join(f'0x{key[x:x+2]}' for x in range(0, len(key), 2))}}}" for key in secrets["keys"])
 
-
     new_sfile = key_file.read().replace("{{totp_keys}}", otp_hashed_keys)
     new_sfile = new_sfile.replace("{{password}}", hashed_pass)
     new_sfile = new_sfile.replace("{{password_len}}", str(secrets["password-length"]))

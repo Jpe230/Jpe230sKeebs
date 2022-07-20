@@ -30,10 +30,9 @@
 #define ENABLE_COMPILE_KEYCODE
 
 /* Enable RGB Matrix Configuration in VIA */
-#define VIA_QMK_RGBLIGHT_ENABLE
+#define VIA_QMK_RGB_MATRIX_ENABLE
 
 /* Enable I2C */
-
 // mcuconf.h
 #include_next <mcuconf.h>
 #undef RP_I2C_USE_I2C0
@@ -43,7 +42,7 @@
 #define HAL_USE_I2C TRUE
 #include_next <halconf.h>
 
-// QMK driver def
+// I2C QMK driver def
 #define I2C_DRIVER I2CD1
 #define I2C1_SDA_PIN GP20
 #define I2C1_SCL_PIN GP21
