@@ -15,48 +15,52 @@
  */
 
 #include "jpe230.h"
-#include "master_graphics.h"
+#include "indicators.h"
 
 extern uint8_t logged_row, logged_col;
-// uint8_t cur_layer = 0;
-// uint32_t layer_test = 0;
+extern uint32_t oled_timer;
+extern const uint8_t key_frame[4];
 
-// void housekeeping_task_kb(void){
-//      if (timer_elapsed32(layer_test) > 1) {
-//         cur_layer++;
-//         if(cur_layer >= NUMBERS_ARRAY_SIZE){
-//             cur_layer = 0;
-//         }
-//         layer_test = timer_read32();
-//     }
-
-// }
+static uint32_t frame_limiter; 
 
 void oled_render_layer_state(void) {
     int current_layer_idx = get_highest_layer(layer_state | default_layer_state);
+    static int current_frame = 0;
+    static bool first_run = 1;
 
-    /* Sanity check */
-    if(current_layer_idx >= NUMBERS_ARRAY_SIZE)
-    {
+    if(first_run){
+        first_run = 0;
+        char clear[ANIM_SIZE] = {0};
+        memset(clear, 0, ANIM_SIZE);
+        oled_write_raw_P(clear, ANIM_SIZE);
+        frame_limiter = timer_read();
+        return;
+    }
+    
+    if (timer_elapsed(frame_limiter) < 12) {
         return;
     }
 
-    /* Write the big font number */
-    oled_write_raw_P(
-      numbers_array[current_layer_idx],
-      GRAPHIC_SIZE);
+    frame_limiter = timer_read();
+
+    if(current_frame < key_frame[current_layer_idx]){
+        current_frame = (current_frame + 1) % IDLE_FRAMES;
+        change_frame_up(current_frame);
+    }else  if(current_frame > key_frame[current_layer_idx]) {
+        current_frame = (current_frame - 1) % IDLE_FRAMES;
+        change_frame_down(IDLE_FRAMES - current_frame - 1);
+    }
+    
 }
 
 void render_master_oled() {
-    
-    /* Check if we need to turn the off the display */
-	if(turn_oled_off){
+    if (timer_elapsed32(oled_timer) > CUSTOM_OLED_TIMEOUT) {
         oled_off();
         return;
-    }else{
-        oled_on();
     }
 
+    oled_on();
+    
     /* Render the layar state */
     oled_render_layer_state();
 

@@ -18,14 +18,10 @@
 
 uint8_t logged_row = 0, logged_col = 0;
 uint32_t oled_timer = 0;
-bool turn_oled_off = false;
 
 void oled_timer_reset() { oled_timer = timer_read32(); }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    if (!is_keyboard_master()) {
-        return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-    }
     return OLED_ROTATION_270;
 }
 
@@ -35,12 +31,6 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool oled_task_user(void) {
-
-    turn_oled_off = false;
-    if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
-        turn_oled_off = true;
-    }
-
     if (is_keyboard_master()) {
         render_master_oled();
     } else {

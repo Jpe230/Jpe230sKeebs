@@ -45,14 +45,15 @@
 /* I2C Pin mapping (OLED) */
 #define I2C1_SDA_PIN GP2
 #define I2C1_SCL_PIN GP3
+#define I2C1_CLOCK_SPEED 400000
 #define I2C_DRIVER I2CD2
 
 /* Enable Compile keycode (i.e. qmk compile ...) */
 #define ENABLE_COMPILE_KEYCODE
 
 /* Splits enables */
-// #define SPLIT_WPM_ENABLE
-// #define SPLIT_OLED_ENABLE
+#define SPLIT_WPM_ENABLE
+#define SPLIT_OLED_ENABLE
 
 /* Use top-left key for master or top-right key for slave enter BL */
 #define BOOTMAGIC_LITE_ROW 0
@@ -62,12 +63,17 @@
 #undef DEBOUNCE
 #define DEBOUNCE 1
 
+#define OLED_TIMEOUT 0
+#define CUSTOM_OLED_TIMEOUT 10000
+#define OLED_UPDATE_INTERVAL 1
+#define OLED_I2C_TIMEOUT 1
+
 /* End RP2040 Specific configuration*/
 #ifdef RGB_MATRIX_ENABLE
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 127
-#define RGB_DISABLE_TIMEOUT OLED_TIMEOUT
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
+#define RGB_DISABLE_TIMEOUT CUSTOM_OLED_TIMEOUT
 #define RGB_MATRIX_STARTUP_HUE 215
 #define RGB_MATRIX_STARTUP_SAT 255
 #define RGB_MATRIX_STARTUP_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS

@@ -14,8 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "jpe230.h"
+#include QMK_KEYBOARD_H
 
-#define GRAPHIC_SIZE 400
-#define NUMBERS_ARRAY_SIZE 4
-extern const char* numbers_array[NUMBERS_ARRAY_SIZE];
+#define ANIM_SIZE 352 // number of bytes in array, max is 1024 (minimize where possible)
+#define IDLE_FRAMES 67 //number of total frames
+
+void change_frame_up(uint8_t frame_number);
+void change_frame_down(uint8_t frame_number);
+const char first_frame[ANIM_SIZE];
+const uint8_t key_frame[4];

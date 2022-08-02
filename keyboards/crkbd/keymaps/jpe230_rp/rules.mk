@@ -16,6 +16,7 @@ SRC += \
     process_record.c \
 	oled/oled_handler.c \
 	oled/master/oled_master_handler.c \
-	oled/master/number_graphics.c \
+	oled/master/indicators_up.c \
+	oled/master/indicators_down.c \
 	oled/slave/oled_slave_handler.c \
 	oled/slave/ocean_dream.c
