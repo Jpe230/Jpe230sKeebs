@@ -78,5 +78,6 @@ enum MACROPAD_KEYCODES {
     AP_AE_DIV,
     AP_AE_VOL,
     AP_AE_ME,
-    AP_AE_LAYER
+    AP_AE_LAYER,
+    AP_SPOTIFY
 };

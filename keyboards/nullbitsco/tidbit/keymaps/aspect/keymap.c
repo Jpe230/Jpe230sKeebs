@@ -31,11 +31,11 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
-                           KC_PSLS, KC_PAST, KC_PMNS,
-  KC_VOLD, KC_VOLU, KC_P7, QK_BOOT, EE_CLR,  KC_PPLS,
-  KC_TRNS, KC_TRNS, KC_P4, KC_P5,   KC_P6,   KC_PPLS,
-  KC_TRNS, KC_TRNS, KC_P1, KC_P2,   KC_P3,   KC_PENT,
-  KC_TRNS, KC_TRNS, KC_P0, KC_P0,   KC_PDOT, KC_PENT
+                 ___, ___, ___,
+  KC_VOLD, KC_VOLU, ___, ___, ___, ___,
+  ___, ___, ___, ___, ___, ___,
+  ___, ___, ___, ___, ___, ___,
+  ___, ___, ___, ___, ___, ___
   ),
 
   [_VIA1] = LAYOUT(
@@ -248,10 +248,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING("l" SS_DELAY(20) "l");
                 break;
             case AP_AE_ME:
-                SEND_STRING(SS_LCTL(SS_LALT("m")));
+                SEND_STRING(SS_LCTL("m"));
                 break;
             case AP_AE_LAYER:
                 SEND_STRING("u" SS_DELAY(20) "u");
+                break;
+            case AP_SPOTIFY:
+                SEND_STRING(SS_LGUI("r"));
+                SEND_STRING("spotify.exe\n");
                 break;
 
         }
