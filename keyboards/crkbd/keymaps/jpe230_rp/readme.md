@@ -8,8 +8,8 @@ The four layers:
 - ADJUST Layer: Numpad + Media Keys + Fn keys
 
 ## OLED
-- Master: Renders layer state + keylog
-- Slave : ~~Renders an animation of a cat that varies its animation speed based on the current WPM~~ TODO
+- Master: Renders layer state + keylog + WPM
+- Slave : Ocean Dream
 
 ## Changes vs my Pro Micro Board
 - Updated `rules.mk`:

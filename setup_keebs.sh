@@ -52,6 +52,7 @@ fi
     echo 'keyboards/adafruit/macropad/keymaps/default-macros/*'
     echo 'keyboards/crkbd/keymaps/jpe230_rp/*'
     echo 'keyboards/handwired/bigkey/*'
+    echo 'keyboards/handwired/dumberpad/*'
     echo 'keyboards/keychron/q2/q2_ansi_stm32l432_ec11/keymaps/jpe230/*'
     echo 'keyboards/keychron/q2/rev_0111/keymaps/jpe230/*'
     echo 'keyboards/nullbitsco/tidbit/keymaps/aspect/*'

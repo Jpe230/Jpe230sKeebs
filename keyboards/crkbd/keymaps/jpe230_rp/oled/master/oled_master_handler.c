@@ -21,7 +21,7 @@ extern uint8_t logged_row, logged_col;
 extern uint32_t oled_timer;
 extern const uint8_t key_frame[4];
 
-static uint32_t frame_limiter; 
+static uint32_t frame_limiter;
 
 void oled_render_layer_state(void) {
     int current_layer_idx = get_highest_layer(layer_state | default_layer_state);
@@ -36,7 +36,7 @@ void oled_render_layer_state(void) {
         frame_limiter = timer_read();
         return;
     }
-    
+
     if (timer_elapsed(frame_limiter) < 12) {
         return;
     }
@@ -50,7 +50,7 @@ void oled_render_layer_state(void) {
         current_frame = (current_frame - 1) % IDLE_FRAMES;
         change_frame_down(IDLE_FRAMES - current_frame - 1);
     }
-    
+
 }
 
 void render_master_oled() {
@@ -60,7 +60,7 @@ void render_master_oled() {
     }
 
     oled_on();
-    
+
     /* Render the layar state */
     oled_render_layer_state();
 
@@ -73,9 +73,9 @@ void render_master_oled() {
     char logged_matrix[9] = {0};
     sprintf(logged_matrix, "%02dx%02d", logged_col, logged_row);
 
-    /* Write a separator char: ◆, 
-     * make sure to add a NULL terminator otherwise strlen will fail
-     */ 
+    /* Write a separator char: ◆,
+     * make sure to add a NULL terminator otherwise strlen could fail
+     */
     static const char PROGMEM separator[] = {4, 4, 4, 4, 4, 0};
     oled_write(separator, false);
 
