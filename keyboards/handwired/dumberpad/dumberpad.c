@@ -72,12 +72,12 @@ painter_device_t display;
 void keyboard_post_init_kb(void) {
     debug_enable = true;
 
-    display = qp_gc9a01_make_spi_device(QUANTUM_PAINTER_LVGL_DISPLaY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLaY_HEIGHT, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
+    display = qp_gc9a01_make_spi_device(QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
     qp_init(display, QP_ROTATION_180);
     
     // Turn on the LCD and clear the display
     qp_power(display, true);
-    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLaY_WIDTH - 1, QUANTUM_PAINTER_LVGL_DISPLaY_HEIGHT - 1, HSV_BLACK, true);
+    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH - 1, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT - 1, HSV_BLACK, true);
     qp_flush(display);
 
     // Start LVGL

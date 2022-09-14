@@ -27,7 +27,7 @@ QUANTUM_PAINTER_DRIVERS = gc9a01_spi
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pimoroni_trackball
 
-LTO_ENABLE = yes # For whatever reason the compiler doesnt like compiling LVGL without optimizations
+#LTO_ENABLE = yes # For whatever reason the compiler doesnt like compiling LVGL without optimizations
 
 # Project specific files
 SRC += lib/ui/ui.c
