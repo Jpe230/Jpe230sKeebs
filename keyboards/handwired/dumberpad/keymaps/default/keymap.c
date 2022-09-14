@@ -46,9 +46,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
   case 0:
     // main layer, volume
     if (clockwise) {
-      tap_code(KC_VOLU);
+      tap_code_delay(KC_VOLU, 10);
     } else {
-      tap_code(KC_VOLD);
+      tap_code_delay(KC_VOLD, 10);
     }
     break;
   default:
@@ -60,5 +60,5 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     break;
   }
-  return true;
+  return false;
 }
