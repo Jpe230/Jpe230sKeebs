@@ -21,11 +21,16 @@ RGB_MATRIX_DRIVER = WS2812
 WS2812_DRIVER = vendor
 
 QUANTUM_PAINTER_ENABLE = yes
+QUANTUM_PAINTER_LVGL_INTEGRATION = yes
 QUANTUM_PAINTER_DRIVERS = gc9a01_spi
 
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pimoroni_trackball
 
-# # Project specific files
-# SRC += lib/ssd1306_sh1106.c
+LTO_ENABLE = yes # For whatever reason the compiler doesnt like compiling LVGL without optimizations
+
+# Project specific files
+SRC += lib/ui/ui.c
+
+# Note: Not needed QP already add this for us
 # QUANTUM_LIB_SRC += spi_master.c

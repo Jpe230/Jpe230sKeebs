@@ -15,7 +15,8 @@
  */
 
 #include "dumberpad.h"
-//#include "qp.h"
+#include "qp_lvgl.h"
+#include "lib/ui/ui.h"
 
 #ifdef RGB_MATRIX_ENABLE
 led_config_t g_led_config = {{// Key Matrix to LED Index
@@ -70,21 +71,20 @@ painter_device_t display;
 
 void keyboard_post_init_kb(void) {
     debug_enable = true;
-    
-    // urn on the LCD backlight
-    // setPinOutput(LCD_CS_PIN);
-    // setPinOutput(LCD_DC_PIN);
-    // setPinOutput(LCD_RST_PIN);
-    
 
-    //GP29 not connected, SPI cant send if CS is no-pin
-    display = qp_gc9a01_make_spi_device(240, 240, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 8, 0);
-    qp_init(display, QP_ROTATION_0);
+    display = qp_gc9a01_make_spi_device(QUANTUM_PAINTER_LVGL_DISPLaY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLaY_HEIGHT, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
+    qp_init(display, QP_ROTATION_180);
     
     // Turn on the LCD and clear the display
     qp_power(display, true);
-    qp_rect(display, 0, 0, 239, 239, HSV_BLACK, true);
+    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLaY_WIDTH - 1, QUANTUM_PAINTER_LVGL_DISPLaY_HEIGHT - 1, HSV_BLACK, true);
     qp_flush(display);
+
+    // Start LVGL
+    qp_lvgl_start(display);
+    
+    // Run user defined LVGL specific code:
+    ui_init();
 
     // Allow for user post-init
     keyboard_post_init_user();
