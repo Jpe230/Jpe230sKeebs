@@ -26,14 +26,20 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+#include "../../ui_conf.h"
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+#ifdef USE_WIN32DRV
+    #define QK_BOOT 0
+    #define DB_TOGG 1
+    #define EE_CLR  1
+#endif
 
+//////////////////////////////////////////////////////////////
+// Actions for the menu knob
+void dev_qk_boot(void);
+void dev_dbg_toggle(void);
+void dev_clr_eeprom(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

@@ -26,12 +26,7 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
-
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+lv_obj_t* init_static_image(lv_obj_t* screen);
 
 #ifdef __cplusplus
 } /*extern "C"*/

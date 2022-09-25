@@ -26,12 +26,19 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+    #include "../menu.h"
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+    //////////////////////////////////////////////////////////////
+    // Initialization
+    void init_dial_menu(lv_obj_t* screen);
+    void create_dial_menu(lv_obj_t* screen, menu_obj_t* menu_root);
 
+
+    //////////////////////////////////////////////////////////////
+    // API
+    void dial_menu_set_label_text(const char* value);
+    void dial_menu_set_label_text_fml(const char* format, uint16_t value);
+    //void dial_menu_reset_label_text(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/

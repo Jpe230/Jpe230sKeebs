@@ -26,14 +26,13 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
-
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+//////////////////////////////////////////////////////////////
+//  Appr API
+void init_layer_widget(void);
+void init_image_widget(void);
+void show_current_widget(void);
+void hide_current_widget(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

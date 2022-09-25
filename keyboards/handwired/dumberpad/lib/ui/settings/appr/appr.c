@@ -14,26 +14,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "appr.h"
+#include "layer/layer.h"
+#include "img/img.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+lv_obj_t* appr_widget = NULL;
 
-#if __has_include("lvgl/lvgl.h")
-#include "lvgl/lvgl.h"
-#else
-#include "lvgl.h"
-#endif //__has_include("lvgl.h")
+void register_widget(lv_obj_t* widget) {
+    if(lv_obj_is_valid(appr_widget)) {
+        lv_obj_del(appr_widget);
+    }
 
-    #include "fonts/fonts.h"
+    appr_widget = widget;
+}
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+void init_layer_widget() {
+    lv_obj_t* obj = init_layer_indicator(lv_scr_act());
+    register_widget(obj);
+}
 
+void init_image_widget() {
+    lv_obj_t* obj = init_static_image(lv_scr_act());
+    register_widget(obj);
+}
 
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
+void hide_current_widget() {
+    if(appr_widget != NULL) {
+        lv_obj_add_flag(appr_widget, LV_OBJ_FLAG_HIDDEN);
+    }
+}
 
+void show_current_widget() {
+    if (appr_widget != NULL) {
+        lv_obj_clear_flag(appr_widget, LV_OBJ_FLAG_HIDDEN);
+    }
+}

@@ -15,8 +15,9 @@
  */
 
 #include "dumberpad.h"
-#include "qp_lvgl.h"
 #include "lib/ui/ui.h"
+#include "lib/ui/settings/screensaver/screensaver.h"
+#include "qp_lvgl.h"
 
 #ifdef RGB_MATRIX_ENABLE
 led_config_t g_led_config = {{// Key Matrix to LED Index
@@ -48,44 +49,125 @@ led_config_t g_led_config = {{// Key Matrix to LED Index
                               4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4}};
 #endif
 
-#ifdef ENCODER_ENABLE
+static int8_t rotations = 0;
+painter_device_t display;
+static lv_group_t *g;
+bool pressed_encoder = false;
+bool lvgl_control = false;
+
 bool encoder_update_kb(uint8_t index, bool clockwise) {
+    dprintf("lvgl_control = %d, Rotations = %d\n", lvgl_control, rotations);
+
+    if (lvgl_control && index == 0) {
+        if (clockwise) {
+            rotations++;
+        } else {
+            rotations--;
+        }
+        dprintf("Rotations: %d\n", rotations);
+        return false;
+    }
+
     if (!encoder_update_user(index, clockwise)) {
         return false;
     }
-    switch (get_highest_layer(layer_state)) {
-        case 0:
-            // main layer, volume
-            if (clockwise) {
-                tap_code(KC_VOLU);
-            } else {
-                tap_code(KC_VOLD);
-            }
-            break;
+    
+    if (clockwise) {
+        tap_code(KC_VOLU);
+    } else {
+        tap_code(KC_VOLD);
     }
+
     return true;
 }
-#endif
 
-painter_device_t display;
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    
+    if(lvgl_control){
+        if(record->event.key.col == 0 && record->event.key.row == 3) {
+            if (record->event.pressed) {
+                pressed_encoder = true;
+            } else {
+                pressed_encoder = false;
+            }
+
+            return false;
+        }
+    }
+    
+    switch (keycode) {
+        case ENA_LVGL:
+            if (record->event.pressed && !lvgl_control) {
+                lvgl_control = true;
+                hide_screensaver();
+            }
+            return false;
+    }
+
+  return true;
+}
+
+void encoder_read_2(lv_indev_drv_t *drv, lv_indev_data_t *data) {
+    data->enc_diff = rotations;
+    rotations = 0;
+
+    if (pressed_encoder)
+        data->state = LV_INDEV_STATE_PRESSED;
+    else
+        data->state = LV_INDEV_STATE_RELEASED;
+}
 
 void keyboard_post_init_kb(void) {
     debug_enable = true;
 
-    display = qp_gc9a01_make_spi_device(QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);
+    display = qp_gc9a01_make_spi_device(
+        QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT,
+        LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 2, 0);
     qp_init(display, QP_ROTATION_180);
-    
+
     // Turn on the LCD and clear the display
     qp_power(display, true);
-    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH - 1, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT - 1, HSV_BLACK, true);
+    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH - 1,
+            QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT - 1, HSV_BLACK, true);
     qp_flush(display);
 
     // Start LVGL
     qp_lvgl_start(display);
-    
+
+    // Register Encoder and create default group
+    static lv_indev_drv_t indev_drv;
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_ENCODER;
+    indev_drv.read_cb = encoder_read_2;
+    lv_indev_drv_register(&indev_drv);
+
+    g = lv_group_create();
+    lv_group_set_default(g);
+    lv_indev_t *cur_drv = NULL;
+    for (;;) {
+        cur_drv = lv_indev_get_next(cur_drv);
+        if (!cur_drv) {
+            break;
+        }
+
+        if (cur_drv->driver->type == LV_INDEV_TYPE_KEYPAD) {
+            lv_indev_set_group(cur_drv, g);
+        }
+
+        if (cur_drv->driver->type == LV_INDEV_TYPE_ENCODER) {
+            lv_indev_set_group(cur_drv, g);
+        }
+    }
+
     // Run user defined LVGL specific code:
-    ui_init();
+    main_screen_init();
 
     // Allow for user post-init
     keyboard_post_init_user();
+
+    show_screensaver();
+}
+
+void disable_lvgl() {
+    lvgl_control = false;
 }

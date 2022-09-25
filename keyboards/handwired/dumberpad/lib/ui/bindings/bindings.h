@@ -26,13 +26,21 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+    uint8_t qmk_lv_get_bpm(void);
+    
+    lv_color_hsv_t qmk_lv_rgb_matrix_get_hsv(void);
+    void qmk_lv_rgb_matrix_sethsv(uint16_t hue, uint8_t sat, uint8_t val, bool eeprom);
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+    uint8_t qmk_lv_rgb_matrix_get_speed(void);
+    void qmk_lv_rgb_matrix_set_speed(uint8_t speed, bool eeprom);
 
+    uint8_t qmk_lv_rgb_matrix_get_mode(void);
+    void qmk_lv_rgb_matrix_mode(uint8_t mode, bool eeprom);
 
+    void qmk_lv_tap_keycode(int keycode);
+
+    void qmk_lv_set_layer(uint8_t layer);
+    uint8_t qmk_lv_geT_layer(void);
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

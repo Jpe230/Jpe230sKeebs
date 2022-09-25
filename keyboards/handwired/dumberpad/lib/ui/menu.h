@@ -26,12 +26,25 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+typedef enum {
+    JP_NEXT_ITEM,
+    JP_PREV_ITEM,
+    JP_WIDGET
+} menu_action;
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+typedef struct _menu_obj_t {
+    char value[15];
+    char symbol[15];
+    uint8_t action;
+    void (*do_action)(void);
+    uint8_t position;
+    struct _menu_obj_t* parent;
+    struct _menu_obj_t* next_sibling;
+    struct _menu_obj_t* first_child;
+} menu_obj_t;
 
+menu_obj_t root;
+void init_menu(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/

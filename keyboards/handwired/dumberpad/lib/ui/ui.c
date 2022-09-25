@@ -1,47 +1,65 @@
-// SquareLine LVGL GENERATED FILE
-// EDITOR VERSION: SquareLine Studio 1.1.0
-// LVGL VERSION: 8.2
-// PROJECT: SquareLine_Project
+﻿/* Copyright 2022 Jose Pablo Ramirez <jp.ramangulo@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "ui.h"
-#include "ui_helpers.h"
+#include "menu.h"
+#include "dial_menu/dial_menu.h"
+#include "settings/appr/appr.h"
+#include "styles/styles.h"
+#include "widgets/bpm.h"
+#include "settings/screensaver/screensaver.h"
 
-///////////////////// VARIABLES ////////////////////
-lv_obj_t * ui_Screen1;
-lv_obj_t * ui_Label1;
+lv_obj_t* main_screen;
 
-///////////////////// TEST LVGL SETTINGS ////////////////////
-#if LV_COLOR_DEPTH != 16
-    #error "LV_COLOR_DEPTH should be 16bit to match SquareLine Studio's settings"
-#endif
-#if LV_COLOR_16_SWAP != 1
-    #error "LV_COLOR_16_SWAP should be 1 to match SquareLine Studio's settings"
-#endif
+void main_ui_unit(void) {
+    // Init the main screen
+    main_screen = lv_obj_create(NULL);
+    lv_obj_clear_flag(main_screen, LV_OBJ_FLAG_SCROLLABLE); // Disable scrolling
 
-///////////////////// ANIMATIONS ////////////////////
+    lv_obj_t* background = lv_obj_create(main_screen);
 
-///////////////////// FUNCTIONS ////////////////////
+    lv_obj_set_size(background, 240, 240);
+    lv_obj_set_style_border_width(background, 0, 0);
+    lv_obj_set_style_pad_all(background, 0, 0);
+    lv_obj_center(background);
 
-///////////////////// SCREENS ////////////////////
-void ui_Screen1_screen_init(void)
-{
-    ui_Screen1 = lv_obj_create(NULL);
-    lv_obj_clear_flag(ui_Screen1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
-    ui_Label1 = lv_label_create(ui_Screen1);
-    lv_obj_set_width(ui_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_align(ui_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label1, "Hello from LVGL!");
-
+    lv_obj_add_style(background, &style_main_screen, 0);
 }
 
-void ui_init(void)
-{
-    lv_disp_t * dispp = lv_disp_get_default();
-    lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
-                                               true, LV_FONT_DEFAULT);
+void main_screen_init(void){
+    lv_disp_t* dispp = lv_disp_get_default();
+    lv_theme_t* theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED), true, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Screen1_screen_init();
-    lv_disp_load_scr(ui_Screen1);
+
+    init_menu();
+    main_ui_unit();
+    
+    lv_disp_load_scr(main_screen);
+    
+    init_dial_menu(main_screen);
+    create_dial_menu(main_screen, &root);
+
+    init_layer_widget();
+
+ #ifdef SHOW_TEST_CIRCLE
+     lv_obj_t* limit_circle = lv_obj_create(main_screen);
+     lv_obj_set_size(limit_circle, 250, 250);
+     lv_obj_set_style_radius(limit_circle, LV_RADIUS_CIRCLE, 0);
+     lv_obj_set_style_border_width(limit_circle, 10, 0);
+     lv_obj_set_style_bg_opa(limit_circle, 0, 0);
+     lv_obj_center(limit_circle);
+ #endif
 }

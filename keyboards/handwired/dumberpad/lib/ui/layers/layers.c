@@ -14,26 +14,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "layers.h"
+#include "../bindings/bindings.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+void set_layer(uint8_t i) {
+    qmk_lv_set_layer(i);
+}
 
-#if __has_include("lvgl/lvgl.h")
-#include "lvgl/lvgl.h"
-#else
-#include "lvgl.h"
-#endif //__has_include("lvgl.h")
-
-    #include "fonts/fonts.h"
-
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
-
-#ifdef __cplusplus
-} /*extern "C"*/
-#endif
-
+void set_layer_1() {
+    set_layer(0);
+}
+void set_layer_2() {
+    set_layer(1);
+}
+void set_layer_3() {
+    set_layer(2);
+}
+void set_layer_4() {
+    set_layer(3);
+}

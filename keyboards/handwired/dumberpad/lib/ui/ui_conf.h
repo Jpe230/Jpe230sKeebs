@@ -26,14 +26,24 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+//#define USE_WIN32DRV 
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
+//////////////////////////////////////////////////////////////
+// User Defines
+#define ARC_SIZE 176
+#define ARC_WIDTH 34
+#define ARC_POS_X 0
+#define ARC_POS_Y 80
+#define ARC_Y ARC_POS_Y
+#define MENU_KNOB_SIZE 110
+#define LAYER_POS_Y -60
+#define LAYER_POS_X 0
 
+
+#ifdef USE_WIN32DRV
+    #define SHOW_TEST_CIRCLE 1
+#endif
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

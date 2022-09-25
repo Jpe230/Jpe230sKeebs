@@ -26,14 +26,9 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
-
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+LV_IMG_DECLARE(badge_dark);
+LV_IMG_DECLARE(sama);
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

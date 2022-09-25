@@ -26,14 +26,14 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+//////////////////////////////////////////////////////////////
+// Actions for the menu knob
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+void set_layer_1(void);
+void set_layer_2(void);
+void set_layer_3(void);
+void set_layer_4(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

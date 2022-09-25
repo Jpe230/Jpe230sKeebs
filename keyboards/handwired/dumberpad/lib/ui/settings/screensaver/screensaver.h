@@ -26,14 +26,12 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+    void set_sama_svr(void);
+    void set_logo_svr(void);
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+    void show_screensaver(void);
+    void hide_screensaver(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
-

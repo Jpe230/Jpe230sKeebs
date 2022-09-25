@@ -17,8 +17,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
                     KC_P7,      KC_P8,    KC_P9,             KC_PMNS,
                     KC_P4,      KC_P5,    KC_P6,             KC_PPLS,
-                    KC_P1,      KC_P2,    KC_P3,             KC_PAST,
-        KC_MUTE,    TT(1),      KC_P0,    _______,           KC_ENTER
+                    KC_P1,      KC_P2,    KC_P3,             KC_A,
+        KC_MUTE,    TT(1),      KC_P0,    _______,           KC_Z
     ),
     /*
             SUB LAYER  - RGB controls, Modes on encoder
@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                     RGB_TOG,    RGB_VAD,     RGB_VAI,      QK_BOOT,
                     KC_NO,      RGB_HUD,     RGB_HUI,      KC_NO,
                     KC_NO,      RGB_SAD,     RGB_SAI,      KC_NO,
-        KC_NO,      _______,    RGB_SPD,     RGB_SPI,      KC_NO
+        ENA_LVGL,   _______,    RGB_SPD,     RGB_SPI,      KC_NO
     ),
 };
 // clang-format on

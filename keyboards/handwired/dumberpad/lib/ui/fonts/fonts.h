@@ -26,12 +26,11 @@ extern "C" {
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
 
-    #include "fonts/fonts.h"
+#include "extra_icons.h"
 
-    extern lv_obj_t* main_screen;
-    extern lv_obj_t* background_screen;
-    void main_screen_init(void);
-
+LV_FONT_DECLARE(impact_45)
+LV_FONT_DECLARE(impact_22)
+LV_FONT_DECLARE(extra_icons)
 
 #ifdef __cplusplus
 } /*extern "C"*/
