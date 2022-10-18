@@ -10,3 +10,10 @@ Keymaps in this repo:
 
 Keyboards in this repo:
 - Handwired Big Key Macropad
+- Handwired-ish Dumpad
+
+## Setting up
+
+Run `./setup_keebs.sh` to symlink the keymaps to the `qmk_firmare` folder
+
+

@@ -1,6 +1,8 @@
 #!/bin/sh
 
-readonly QMKDIR=$HOME/qmk/qmk_firmware
+readonly QMKPATH=$HOME/qmk # The parent folder for "qmk_firmware"
+
+readonly QMKDIR=$QMKPATH/qmk_firmware
 readonly EXCLUDE=$QMKDIR/.git/info/exclude
 readonly CONFIG=$QMKDIR/.git/config
 
@@ -24,7 +26,7 @@ echo 'Removing dir. structure'
 find $QMKDIR -empty -type d -not -path "$QMKDIR/.git/*" -delete
 
 echo 'Copying contents as symlinks'
-cp -as $HOME/qmk/jpe230s_keebs/keyboards/* $QMKDIR/keyboards/ >/dev/null 2>&1
+cp -as $(pwd)/keyboards/* $QMKDIR/keyboards/ >/dev/null 2>&1
 
 if grep -Fxq '[remote "Jpe230"]' $CONFIG; then
   echo '.git/config already modified!'
@@ -39,24 +41,17 @@ fi
 #   echo '.git/info/excludes already modified!'
 # else
 #   echo '.git/info/excludes not modified!'
-  echo 'Modifying .git/info/excludes'
+  echo 'Creating clean .git/info/excludes'
   rm $EXCLUDE
   touch $EXCLUDE
-  {
-    echo '# jpe230 excludes'
-    echo ''
-    echo 'LICENSE'
-    echo 'README.md'
-    echo 'keyboards/keychron/k14/keymaps/jpe230/*'
-    echo 'keyboards/adafruit/macropad/keymaps/jpe230/*'
-    echo 'keyboards/adafruit/macropad/keymaps/default-macros/*'
-    echo 'keyboards/crkbd/keymaps/jpe230_rp/*'
-    echo 'keyboards/handwired/bigkey/*'
-    echo 'keyboards/handwired/dumberpad/*'
-    echo 'keyboards/keychron/q2/q2_ansi_stm32l432_ec11/keymaps/jpe230/*'
-    echo 'keyboards/keychron/q2/rev_0111/keymaps/jpe230/*'
-    echo 'keyboards/nullbitsco/tidbit/keymaps/aspect/*'
-  } >> $EXCLUDE
+
+  echo 'Modifying .git/info/excludes'
+  
+  # Mark the exlucde file
+  echo '# jpe230 excludes' >> $EXCLUDE
+  
+  # Find all the keebs
+  find keyboards -name ".keeb" -type f -exec dirname {} \; >> $EXCLUDE
 
 # fi
 
