@@ -15,10 +15,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     \-----------------------------------------------------'
     */
     [0] = LAYOUT(
-                    KC_P7,      KC_P8,    KC_P9,             KC_PMNS,
-                    KC_P4,      KC_P5,    KC_P6,             KC_PPLS,
-                    KC_P1,      KC_P2,    KC_P3,             KC_A,
-        KC_MUTE,    TT(1),      KC_P0,    _______,           KC_Z
+                    KC_7,      KC_8,     KC_9,     KC_PMNS,
+                    KC_4,      KC_5,     KC_6,     KC_PPLS,
+                    KC_1,      KC_2,     KC_3,     KC_A,
+        KC_MUTE,    TT(1),     KC_0,     KC_N,     KC_Z
     ),
     /*
             SUB LAYER  - RGB controls, Modes on encoder
@@ -61,4 +61,41 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     break;
   }
   return false;
+}
+
+extern LED_TYPE rgb_matrix_ws2812_array[DRIVER_LED_TOTAL];
+
+#define TRACKBALL_LED_IDX 15
+
+void trackball_set_rgb(uint8_t r,uint8_t g,uint8_t b, bool adjust_brightness) {
+
+
+    /* Board uses 127 as max value, multiply the values otherwise
+     * the trackball will be dim
+     */
+    if(adjust_brightness){
+        r <<= 1;
+        g <<= 1;
+        b <<= 1;
+    }
+
+    /* Determine lowest value in all three colors, put that into
+     * the white channel and then shift all colors by that amount
+     */
+    uint8_t w = MIN(r, MIN(g, b));
+    r -= w;
+    g -= w;
+    b -= w;
+
+    pimoroni_trackball_set_rgbw(r, g, b, w);
+}
+
+void rgb_matrix_indicators_user(void) {
+    /* Obtain LED values and multiply it by 2 */
+    uint8_t r =  rgb_matrix_ws2812_array[TRACKBALL_LED_IDX].r;
+    uint8_t g =  rgb_matrix_ws2812_array[TRACKBALL_LED_IDX].g;
+    uint8_t b =  rgb_matrix_ws2812_array[TRACKBALL_LED_IDX].b;
+
+    /* Send to trackball */
+    trackball_set_rgb(r, g, b, true);
 }

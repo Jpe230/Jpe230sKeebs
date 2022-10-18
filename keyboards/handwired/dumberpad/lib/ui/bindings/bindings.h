@@ -25,7 +25,7 @@ extern "C" {
 #else
 #include "lvgl.h"
 #endif //__has_include("lvgl.h")
-
+ #include "quantum.h"
     uint8_t qmk_lv_get_bpm(void);
     
     lv_color_hsv_t qmk_lv_rgb_matrix_get_hsv(void);

@@ -15,8 +15,8 @@
  */
 
 #include "dumberpad.h"
-#include "lib/ui/ui.h"
 #include "lib/ui/settings/screensaver/screensaver.h"
+#include "lib/ui/ui.h"
 #include "qp_lvgl.h"
 
 #ifdef RGB_MATRIX_ENABLE
@@ -56,118 +56,128 @@ bool pressed_encoder = false;
 bool lvgl_control = false;
 
 bool encoder_update_kb(uint8_t index, bool clockwise) {
-    dprintf("lvgl_control = %d, Rotations = %d\n", lvgl_control, rotations);
+  dprintf("lvgl_control = %d, Rotations = %d\n", lvgl_control, rotations);
 
-    if (lvgl_control && index == 0) {
-        if (clockwise) {
-            rotations++;
-        } else {
-            rotations--;
-        }
-        dprintf("Rotations: %d\n", rotations);
-        return false;
-    }
-
-    if (!encoder_update_user(index, clockwise)) {
-        return false;
-    }
-    
+  if (lvgl_control && index == 0) {
     if (clockwise) {
-        tap_code(KC_VOLU);
+      rotations++;
     } else {
-        tap_code(KC_VOLD);
+      rotations--;
     }
+    dprintf("Rotations: %d\n", rotations);
+    return false;
+  }
 
-    return true;
+  if (!encoder_update_user(index, clockwise)) {
+    return false;
+  }
+
+  if (clockwise) {
+    tap_code(KC_VOLU);
+  } else {
+    tap_code(KC_VOLD);
+  }
+
+  return true;
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    
-    if(lvgl_control){
-        if(record->event.key.col == 0 && record->event.key.row == 3) {
-            if (record->event.pressed) {
-                pressed_encoder = true;
-            } else {
-                pressed_encoder = false;
-            }
 
-            return false;
-        }
+  if (lvgl_control) {
+    if (record->event.key.col == 0 && record->event.key.row == 3) {
+      if (record->event.pressed) {
+        pressed_encoder = true;
+      } else {
+        pressed_encoder = false;
+      }
+
+      return false;
     }
-    
-    switch (keycode) {
-        case ENA_LVGL:
-            if (record->event.pressed && !lvgl_control) {
-                lvgl_control = true;
-                hide_screensaver();
-            }
-            return false;
+  }
+
+  switch (keycode) {
+  case ENA_LVGL:
+    if (record->event.pressed && !lvgl_control) {
+      lvgl_control = true;
+      hide_screensaver();
     }
+    return false;
+  }
 
   return true;
 }
 
 void encoder_read_2(lv_indev_drv_t *drv, lv_indev_data_t *data) {
-    data->enc_diff = rotations;
-    rotations = 0;
+  data->enc_diff = rotations;
+  rotations = 0;
 
-    if (pressed_encoder)
-        data->state = LV_INDEV_STATE_PRESSED;
-    else
-        data->state = LV_INDEV_STATE_RELEASED;
+  if (pressed_encoder)
+    data->state = LV_INDEV_STATE_PRESSED;
+  else
+    data->state = LV_INDEV_STATE_RELEASED;
 }
 
 void keyboard_post_init_kb(void) {
-    debug_enable = true;
+  debug_enable = true;
 
-    display = qp_gc9a01_make_spi_device(
-        QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH, QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT,
-        LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 2, 0);
-    qp_init(display, QP_ROTATION_180);
+  dprintf("Hello!\n");
 
-    // Turn on the LCD and clear the display
-    qp_power(display, true);
-    qp_rect(display, 0, 0, QUANTUM_PAINTER_LVGL_DISPLAY_WIDTH - 1,
-            QUANTUM_PAINTER_LVGL_DISPLAY_HEIGHT - 1, HSV_BLACK, true);
-    qp_flush(display);
+  display = qp_gc9a01_make_spi_device(240, 240, LCD_CS_PIN, LCD_DC_PIN,
+                                      LCD_RST_PIN, 2, 0);
+  qp_init(display, QP_ROTATION_180);
 
-    // Start LVGL
-    qp_lvgl_start(display);
+  // Turn on the LCD and clear the display
+  qp_power(display, true);
+  qp_rect(display, 0, 0, 240 - 1, 240 - 1, HSV_BLACK, true);
+  qp_flush(display);
 
-    // Register Encoder and create default group
-    static lv_indev_drv_t indev_drv;
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_ENCODER;
-    indev_drv.read_cb = encoder_read_2;
-    lv_indev_drv_register(&indev_drv);
+  // Start LVGL
+  qp_lvgl_attach(display);
 
-    g = lv_group_create();
-    lv_group_set_default(g);
-    lv_indev_t *cur_drv = NULL;
-    for (;;) {
-        cur_drv = lv_indev_get_next(cur_drv);
-        if (!cur_drv) {
-            break;
-        }
+  // Register Encoder and create default group
+  static lv_indev_drv_t indev_drv;
+  lv_indev_drv_init(&indev_drv);
+  indev_drv.type = LV_INDEV_TYPE_ENCODER;
+  indev_drv.read_cb = encoder_read_2;
+  lv_indev_drv_register(&indev_drv);
 
-        if (cur_drv->driver->type == LV_INDEV_TYPE_KEYPAD) {
-            lv_indev_set_group(cur_drv, g);
-        }
-
-        if (cur_drv->driver->type == LV_INDEV_TYPE_ENCODER) {
-            lv_indev_set_group(cur_drv, g);
-        }
+  g = lv_group_create();
+  lv_group_set_default(g);
+  lv_indev_t *cur_drv = NULL;
+  for (;;) {
+    cur_drv = lv_indev_get_next(cur_drv);
+    if (!cur_drv) {
+      break;
     }
 
-    // Run user defined LVGL specific code:
-    main_screen_init();
+    if (cur_drv->driver->type == LV_INDEV_TYPE_KEYPAD) {
+      lv_indev_set_group(cur_drv, g);
+    }
 
-    // Allow for user post-init
-    keyboard_post_init_user();
+    if (cur_drv->driver->type == LV_INDEV_TYPE_ENCODER) {
+      lv_indev_set_group(cur_drv, g);
+    }
+  }
 
-    show_screensaver();
+  // Run user defined LVGL specific code:
+  main_screen_init();
+
+  // Allow for user post-init
+  keyboard_post_init_user();
+
+  show_screensaver();
 }
 
-void disable_lvgl() {
-    lvgl_control = false;
+void disable_lvgl() { lvgl_control = false; }
+
+
+void board_init(void) {
+    // Add a long delay during bootup to allow for debugger attachment
+    int f;
+    for (int i = 0; i < 1000; ++i) {
+        for (int j = 0; j < 1000; ++j) {
+            __asm__ volatile("nop\nnop\nnop\n");
+        }
+        ++f;
+    }
 }

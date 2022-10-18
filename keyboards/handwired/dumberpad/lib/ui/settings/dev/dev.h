@@ -27,6 +27,7 @@ extern "C" {
 #endif //__has_include("lvgl.h")
 
 #include "../../ui_conf.h"
+ #include "quantum.h"
 
 #ifdef USE_WIN32DRV
     #define QK_BOOT 0

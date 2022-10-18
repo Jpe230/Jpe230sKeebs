@@ -29,7 +29,7 @@ extern "C" {
 #include "../ui_conf.h"
 
     #ifdef USE_WIN32DRV
-    
+
         #define LV_STYLE_INIT(var_name, prop_array)                             \
             lv_style_t var_name = {                                             \
                 .v_p = { .const_props = prop_array },                           \
@@ -39,6 +39,7 @@ extern "C" {
             }
     #else
         #define LV_STYLE_INIT(var_name, prop_array) lv_style_t var_name = { .v_p = { .const_props = prop_array }, .has_group = 0xFF, .is_const = 1 }
+        //#define LV_STYLE_INIT(var_name, prop_array) lv_style_t var_name = { .v_p = { .const_props = prop_array }, .has_group = 0xFF, .prop1 = LV_STYLE_PROP_ANY, .prop_cnt = (sizeof(prop_array) / sizeof((prop_array)[0])) }
     #endif
 
 
