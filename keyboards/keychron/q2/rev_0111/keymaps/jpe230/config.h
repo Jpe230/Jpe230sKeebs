@@ -16,9 +16,12 @@
 
 #define TAPPING_TOGGLE 2
 
+#define DEBUG_MATRIX_SCAN_RATE
+
 /* Enable USB suspend and timeout */
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 #define RGB_DISABLE_TIMEOUT 600000
+
 /* Startup values
  * RGB = #00c8ff
  */
@@ -78,3 +81,6 @@
 #define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
 
 #define ENABLE_COMPILE_KEYCODE
+
+#define I2C1_CLOCK_SPEED 1000000
+#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2

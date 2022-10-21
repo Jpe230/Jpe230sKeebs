@@ -1,4 +1,4 @@
 VIA_ENABLE = yes
 MOUSEKEY_ENABLE = yes
-
-SRC += recorduser.c
+CONSOLE_ENABLE = yes
+ENCODER_MAP_ENABLE = yes
