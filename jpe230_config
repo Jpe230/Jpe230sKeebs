@@ -44,3 +44,6 @@
 [remote "KarlK90"]
 	url = https://github.com/KarlK90/qmk_firmware
 	fetch = +refs/heads/*:refs/remotes/KarlK90/*
+[remote "Dexter"]
+	url = https://github.com/dexter93/qmk_firmware
+	fetch = +refs/heads/*:refs/remotes/dexter93/*
