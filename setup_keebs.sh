@@ -53,6 +53,9 @@ fi
   # Find all the keebs
   find keyboards -name ".keeb" -type f -exec dirname {} \; >> $EXCLUDE
 
+  # Fetch all repos
+  git -C $QMKDIR fetch --all
+
 # fi
 
 echo 'Done! Have fun'
