@@ -16,17 +16,17 @@
 
 #include QMK_KEYBOARD_H
 
-enum layers { BASE, FN1, FN2, FN3 };
-
-enum custom_keycodes {
-    JIGGLER = SAFE_RANGE,
+enum layers{
+    BASE,
+    FN1,
+    FN2,
+    FN3
 };
 
 #define KC_LTCF LT(FN2, KC_CAPS)
 #define KC_MSDN KC_MS_WH_DOWN
 #define KC_MSUP KC_MS_WH_UP
 
-// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [BASE] = LAYOUT_ansi_67(
@@ -38,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [FN1] = LAYOUT_ansi_67(
         KC_GRV,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          RGB_TOG,
-        EE_CLR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,  RGB_VAI,
         _______, _______, _______,                            _______,                            _______, TO(BASE), _______, RGB_MOD, RGB_HUI, RGB_SAI),
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,     KC_UP, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          QK_MAKE,
         _______, KC_LEFT,   KC_DOWN, KC_RGHT, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
         _______,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______,
-        _______, _______,   _______,                            JIGGLER,                            _______, _______, _______, KC_HOME, _______, KC_END),
+        _______, _______,   _______,                            _______,                            _______, _______, _______, KC_HOME, _______, KC_END),
 
     [FN3] = LAYOUT_ansi_67(
         _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
@@ -62,91 +62,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [FN1]  = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
-    [FN2]  = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
-    [FN3]  = { ENCODER_CCW_CW(_______, _______) },
+    [FN2]     = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
+    [FN3]     = { ENCODER_CCW_CW(_______, _______) },
 };
-// clang-format on
 
-bool dip_switch_update_user(uint8_t index, bool active) {
-    if (index == 0) {
-        debug_enable = active;
-    }
-    return false;
+void keyboard_post_init_user(void) {
+    debug_enable = true;
 }
-
-// static bool button_down = false;
-static bool direction = false; // false = left, true = left
-static bool jiggler_active = false;
-
-bool jiggle_mouse(void) {
-    uint8_t keycode_prev = !direction ? KC_MS_LEFT : KC_MS_RIGHT;
-    uint8_t keycode_curr =  direction ? KC_MS_LEFT : KC_MS_RIGHT;
-
-    dprintf("Registering Keycode: %d, remove %d\n", keycode_curr, keycode_prev);
-
-    unregister_code(keycode_prev);
-    register_code(keycode_curr);
-
-    direction = !direction;
-
-    // if(!button_down) {
-    //     if(direction){
-    //         register_code(KC_MS_LEFT);
-    //     }
-    //     else{
-    //        register_code(KC_MS_RIGHT);
-    //     }
-    // }
-    // else{
-    //     if(direction){
-    //         unregister_code(KC_MS_LEFT);
-    //     }
-    //     else{
-    //         unregister_code(KC_MS_RIGHT);
-    //     }
-
-    //     direction = !direction;
-    // }
-
-    // button_down = !button_down;
-
-    return true;
-}
-
-uint32_t mouse_callback(uint32_t trigger_time, void *cb_arg) {
-    /* do something */
-    bool repeat = jiggle_mouse();
-    return repeat ? 25 : 0;
-}
-
-deferred_token mouse_token;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        // case QK_BOOT:
-        //     if (record->event.pressed) {
-        //         rgb_matrix_set_color_all(0, 0, 0);
-        //         rgb_matrix_driver.flush();
-        //         rgb_matrix_disable_noeeprom();
-        //         eeconfig_init();
-        //     }
-        //     return true;
-        case JIGGLER:
-            if (record->event.pressed){
-                jiggler_active = !jiggler_active;
-
-                if(jiggler_active){
-                    mouse_token = defer_exec(1, mouse_callback, NULL);
-                }
-                else{
-                    cancel_deferred_exec(mouse_token);
-                    unregister_code(KC_MS_LEFT);
-                    unregister_code(KC_MS_RIGHT);
-                }
-            }
-            return false;
+  switch (keycode) {
+  case QK_BOOT:
+    if (record->event.pressed) {
+      rgb_matrix_set_color_all(0, 0, 0);
+      rgb_matrix_driver.flush();
+      rgb_matrix_disable_noeeprom();
+      eeconfig_init();
     }
-
-
     return true;
+  }
+
+  return true;
 }
