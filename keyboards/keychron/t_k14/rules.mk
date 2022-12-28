@@ -19,5 +19,7 @@ DIP_SWITCH_ENABLE = yes
 
 RGB_MATRIX_ENABLE = yes
 RGB_MATRIX_DRIVER = SN32F24xB
+
+VIA_ENABLE = yes
 # Build ansi by default
 # DEFAULT_FOLDER = keychron/k14/rgb/ansi
