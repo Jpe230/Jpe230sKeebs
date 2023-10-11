@@ -1,6 +1,6 @@
 #!/bin/sh
 
-readonly QMKPATH=$HOME/qmk # The parent folder for "qmk_firmware"
+readonly QMKPATH=$HOME # The parent folder for "qmk_firmware"
 
 readonly QMKDIR=$QMKPATH/qmk_firmware
 readonly EXCLUDE=$QMKDIR/.git/info/exclude
@@ -54,7 +54,7 @@ fi
   find keyboards -name ".keeb" -type f -exec dirname {} \; >> $EXCLUDE
 
   # Fetch all repos
-  git -C $QMKDIR fetch --all
+  #git -C $QMKDIR fetch --all
 
 # fi
 

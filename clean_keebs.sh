@@ -1,6 +1,6 @@
 #!/bin/sh
 
-readonly QMKDIR=$HOME/qmk/qmk_firmware
+readonly QMKDIR=$HOME/qmk_firmware
 readonly EXCLUDE=$QMKDIR/.git/info/exclude
 readonly CONFIG=$QMKDIR/.git/config
 

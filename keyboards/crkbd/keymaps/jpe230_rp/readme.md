@@ -1,4 +1,4 @@
-# Jpe230's CRKBD (RP2040) Layout
+# Jpe230's CRKBD Layout
 
 ## Layers
 The four layers:
@@ -6,21 +6,18 @@ The four layers:
 - LOWER Layer: Numbers + Arrows
 - RAISE Layer: Symbols
 - ADJUST Layer: Numpad + Media Keys + Fn keys
-
 ## OLED
-- Master: Renders layer state + keylog + WPM
-- Slave : Ocean Dream
+The graphics for the OLED varies depending on the target platform:
 
-## Changes vs my Pro Micro Board
-- Updated `rules.mk`:
-  - Set MCU to `RP2040`
-  - WS2812 driver to `vendor`
-  - Serial driver to `vendor`
-  - Enable warnings
-- Updated `config.h`:
-  - Set the RP2040 pins for matrix, OLED and RGB
-- Added `mcuconf.h` to use I2C1 (for OLED)
-- Added `halconf.h` to enable I2C (for OLED)
+| Half   | RP2040                               | Pro Micro                            |
+|--------|--------------------------------------|--------------------------------------|
+| Master | ![](https://i.imgur.com/FF0EuWoh.png) | ![](https://i.imgur.com/stxRevvh.png) |
+| Slave  | ![](https://i.imgur.com/hyjdDITh.png) | ![](https://i.imgur.com/UrTCd2sh.png) |
+
 
 ## Flashing
-Flash using `qmk compile -kb crkbd -km jpe230_rp` for Pro Micro
+For Arduino Pro Micro:
+- `qmk compile -kb crkbd -km jpe230`
+
+For Pro Micro Compatible board (See [Converters](https://docs.qmk.fm/#/feature_converters?id=converters)):
+- `qmk compile -kb crkbd -km jpe230 -e CONVERT_TO<target>`
