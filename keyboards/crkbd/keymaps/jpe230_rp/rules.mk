@@ -1,22 +1,30 @@
-MCU = RP2040
-BOOTLOADER = rp2040
-
+# Shared rules for both of my Corne
+OLED_ENABLE       = yes
+OLED_DRIVER       = SSD1306
+VIA_ENABLE        = yes
 RGB_MATRIX_ENABLE = yes
-WS2812_DRIVER = vendor
-OLED_ENABLE = yes
-OLED_DRIVER  = SSD1306
-SERIAL_DRIVER  = vendor
-DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
-WPM_ENABLE = yes
-CONSOLE_ENABLE = yes
-VIA_ENABLE = yes
 
-# Project specific files
-SRC += \
-    process_record.c \
-	oled/oled_handler.c \
-	oled/master/oled_master_handler.c \
-	oled/master/indicators_up.c \
-	oled/master/indicators_down.c \
-	oled/slave/oled_slave_handler.c \
-	oled/slave/ocean_dream.c
+SRC += oled/oled_handler.c process_record.c
+
+ifneq ($(CONVERT_TO),)
+    # Asume ARM
+    DEBUG_MATRIX_SCAN_RATE_ENABLE = yes
+    WPM_ENABLE = yes
+    CONSOLE_ENABLE = yes
+    SRC +=  oled/rp2040/master/oled_master_handler.c \
+            oled/rp2040/master/indicators_down.c \
+            oled/rp2040/master/indicators_up.c \
+            oled/rp2040/slave/oled_slave_handler.c \
+            oled/rp2040/slave/ocean_dream.c
+else
+    # Asume AVR
+    LTO_ENABLE = yes
+    SRC +=  oled/avr/master/oled_master_handler.c \
+            oled/avr/slave/oled_slave_handler.c
+endif
+
+S_LOCATION = ${SLOCATION}
+
+ifneq ("$(wildcard $(S_LOCATION)/supersecrets.c)","")
+    SRC +=  $(S_LOCATION)/supersecrets.c
+endif

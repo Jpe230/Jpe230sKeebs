@@ -14,19 +14,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include QMK_KEYBOARD_H
+#include "jpe230.h"
 
-enum layers{
-    BASE,
-    FN1,
-    FN2,
-    FN3
-};
+enum layers { BASE, FN1, FN2, FN3 };
 
 #define KC_LTCF LT(FN2, KC_CAPS)
 #define KC_MSDN KC_MS_WH_DOWN
 #define KC_MSUP KC_MS_WH_UP
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [BASE] = LAYOUT_ansi_67(
@@ -34,53 +30,101 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,     KC_LBRC, KC_RBRC, KC_BSLS,          KC_F10,
         KC_LTCF, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN,  KC_QUOT,           KC_ENT,          KC_F11,
         KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,   KC_SLSH,          KC_RSFT, KC_UP,
-        KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             KC_RALT,  TT(FN1), MO(FN2), KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_LCTL, KC_LGUI, KC_LALT,                            KC_SPC,                             MO(FN3),  TT(FN1), MO(FN2), KC_LEFT, KC_DOWN, KC_RGHT),
 
     [FN1] = LAYOUT_ansi_67(
         KC_GRV,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          RGB_TOG,
-        EEP_RST, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        EE_CLR,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,  RGB_VAI,
         _______, _______, _______,                            _______,                            _______, TO(BASE), _______, RGB_MOD, RGB_HUI, RGB_SAI),
 
     [FN2] = LAYOUT_ansi_67(
-        KC_GRV,  KC_F1,       KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_DEL,          QK_BOOT,
-        _______, _______,     KC_UP, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          QK_MAKE,
-        _______, KC_LEFT,   KC_DOWN, KC_RGHT, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
-        _______,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______,
-        _______, _______,   _______,                            _______,                            _______, _______, _______, KC_HOME, _______, KC_END),
+        KC_GRV,  KC_F1,     KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_DEL,          QK_BOOT,
+        _______, _______,   KC_UP, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          QK_MAKE,
+        _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______,
+        _______, _______, _______,                            JIGGLER,                            _______, _______, _______, KC_HOME, _______, KC_END),
 
     [FN3] = LAYOUT_ansi_67(
-        _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______,   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
-        _______,            _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______,
-        _______, _______,   _______,                            _______,                            _______, _______, _______, _______, _______, _______)
-};
+        _______, KC_SCR1, KC_SCR2, KC_SCR3, KC_SCR4, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______,
+        _______, _______, _______,                            _______,                            _______, _______, _______, _______, _______, _______)
+};  
 
 
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [FN1]  = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
-    [FN2]     = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
-    [FN3]     = { ENCODER_CCW_CW(_______, _______) },
+    [FN2]  = { ENCODER_CCW_CW(KC_MSDN, KC_MSUP) },
+    [FN3]  = { ENCODER_CCW_CW(_______, _______) },
 };
+// clang-format on
 
-void keyboard_post_init_user(void) {
-    debug_enable = true;
+bool dip_switch_update_user(uint8_t index, bool active) {
+    if (index == 0) {
+        debug_enable = active;
+    }
+    return false;
+}
+
+// static bool button_down = false;
+static bool direction = false; // false = left, true = left
+static bool jiggler_active = false;
+
+bool jiggle_mouse(void) {
+    uint8_t keycode_prev = !direction ? KC_MS_LEFT : KC_MS_RIGHT;
+    uint8_t keycode_curr =  direction ? KC_MS_LEFT : KC_MS_RIGHT;
+
+    dprintf("Registering Keycode: %d, remove %d\n", keycode_curr, keycode_prev);
+
+    unregister_code(keycode_prev);
+    register_code(keycode_curr);
+
+    direction = !direction;
+
+    return true;
+}
+
+uint32_t mouse_callback(uint32_t trigger_time, void *cb_arg) {
+    bool repeat = jiggle_mouse();
+    return repeat ? 25 : 0;
+}
+
+deferred_token mouse_token;
+
+__attribute__ ((weak))
+bool process_record_secrets(uint16_t keycode, keyrecord_t *record) {
+  return true;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-  case QK_BOOT:
-    if (record->event.pressed) {
-      rgb_matrix_set_color_all(0, 0, 0);
-      rgb_matrix_driver.flush();
-      rgb_matrix_disable_noeeprom();
-      eeconfig_init();
-    }
-    return true;
-  }
+    switch (keycode) {
+        // case QK_BOOT:
+        //     if (record->event.pressed) {
+        //         rgb_matrix_set_color_all(0, 0, 0);
+        //         rgb_matrix_driver.flush();
+        //         rgb_matrix_disable_noeeprom();
+        //         eeconfig_init();
+        //     }
+        //     return true;
+        case JIGGLER:
+            if (record->event.pressed){
+                jiggler_active = !jiggler_active;
 
-  return true;
+                if(jiggler_active){
+                    mouse_token = defer_exec(1, mouse_callback, NULL);
+                }
+                else{
+                    cancel_deferred_exec(mouse_token);
+                    unregister_code(KC_MS_LEFT);
+                    unregister_code(KC_MS_RIGHT);
+                }
+            }
+            return false;
+    }
+
+    return process_record_secrets(keycode, record);
 }

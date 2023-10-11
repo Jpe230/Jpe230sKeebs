@@ -1,33 +1,34 @@
-/* Copyright 2022 Jose Pablo Ramirez <jp.ramangulo@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright 2022 Jose Pablo Ramirez (@jpe230)
+// SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "jpe230.h"
 
-uint8_t logged_row = 0, logged_col = 0;
+uint8_t logged_row;
+uint8_t logged_col;
 uint32_t oled_timer = 0;
 
-void oled_timer_reset() { oled_timer = timer_read32(); }
+__attribute__ ((weak)) void handle_oled_keypress(uint16_t keycode, keyrecord_t *record) {}
+
+__attribute__ ((weak)) oled_rotation_t rotate_master(oled_rotation_t rotation) {return rotation;}
+__attribute__ ((weak)) oled_rotation_t rotate_slave(oled_rotation_t rotation) {return rotation;}
+
+void oled_timer_reset(void) { oled_timer = timer_read32(); }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    return OLED_ROTATION_270;
+
+    if (!is_keyboard_master()) {
+        return rotate_slave(rotation);
+    }
+
+    return rotate_master(rotation);
 }
+
 
 void set_keylog(uint16_t keycode, keyrecord_t *record) {
     logged_row = record->event.key.row;
     logged_col = record->event.key.col;
+
+    handle_oled_keypress(keycode, record);
 }
 
 bool oled_task_user(void) {
