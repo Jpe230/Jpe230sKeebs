@@ -1,0 +1,1 @@
+python3 transpiler/transpile_keymap.py  
