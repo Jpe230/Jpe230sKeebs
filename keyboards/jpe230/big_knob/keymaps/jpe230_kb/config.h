@@ -1,0 +1,31 @@
+// Copyright 2023 jpe230 (@jpe230)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
+#define TAPPING_TERM 500
+
+#define RGBLIGHT_DEFAULT_HUE 194
+#define RGBLIGHT_DEFAULT_SAT 232
+#define RGBLIGHT_DEFAULT_VAL 200
+#define RGBLIGHT_DEFAULT_SPD 50
+
+// Colors
+#define RGB_LY0 160, 232, 254
+#define RGB_LY1 190, 232, 254
+#define RGB_LY2 220, 232, 254
+#define RGB_LY3 250, 232, 254
+
+#undef LCD_SPI_DIVISOR
+#define LCD_SPI_DIVISOR 2
+#define QUANTUM_PAINTER_PIXDATA_BUFFER_SIZE (30 * 180 * 16 * 2)
+
+#undef BACKLIGHT_DEFAULT_LEVEL
+#define BACKLIGHT_DEFAULT_LEVEL 7
+
+#undef SPI_SCK_PIN
+#define SPI_SCK_PIN GP18
+
+#undef SPI_MOSI_PIN
+#define SPI_MOSI_PIN GP19
+
+#undef LCD_RST_PIN
+#define LCD_RST_PIN GP10
