@@ -23,5 +23,9 @@ enum custom_keycodes
     KC_SCR2,
     KC_SCR3,
     KC_SCR4,
-    KC_SCR5
+    KC_SCR5,
+    KC_SCR6,
+    KC_SCR7,
+    KC_SCR8,
+    KC_SCR9,
 };

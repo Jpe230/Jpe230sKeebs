@@ -21,10 +21,6 @@
 
 /*encoder resolution */
 #define ENCODER_DEFAULT_POS 0x3
-
-/* DIP switch */
-#define DIP_SWITCH_PINS { A9 }
-
 /* LED Indicators */
 #define LED_MAC_OS_PIN      C10
 #define LED_WIN_LOCK_PIN    C11
@@ -43,24 +39,10 @@
 #define SPI_MOSI_PAL_MODE 5
 
 #define EXTERNAL_FLASH_SPI_SLAVE_SELECT_PIN C12
-#define WEAR_LEVELING_BACKING_SIZE (8 * 1024)
 
 /* I2C Config for LED Driver */
-#define DRIVER_COUNT 2
-#define DRIVER_ADDR_1 0b1110100
-#define DRIVER_ADDR_2 0b1110111
+#define SNLED27351_I2C_ADDRESS_1 SNLED27351_I2C_ADDRESS_GND
+#define SNLED27351_I2C_ADDRESS_2 SNLED27351_I2C_ADDRESS_VDDIO
 #define I2C1_OPMODE OPMODE_I2C
 #define I2C1_CLOCK_SPEED 400000 /* 400000 */
-
-#define DRIVER_1_LED_TOTAL 63
-#define DRIVER_2_LED_TOTAL 21
-#define RGB_MATRIX_LED_COUNT    (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL+22)
-
-#define RGB_DISABLE_WHEN_USB_SUSPENDED // turn off effects when suspended
-
-#define RGB_TRIGGER_ON_KEYDOWN
-#define RGB_MATRIX_FRAMEBUFFER_EFFECTS
-#define RGB_MATRIX_KEYPRESSES
-#define RGB_MATRIX_KEYRELEASES
-
 // #define DISABLE_5075_KEYCODES /*If you need to change or restore the default QMK button function, please open it*/

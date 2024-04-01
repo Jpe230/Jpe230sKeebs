@@ -18,7 +18,7 @@
 // clang-format off
 #ifdef RGB_MATRIX_ENABLE
 
-const is31_led PROGMEM g_is31_leds[RGB_MATRIX_LED_COUNT] = {
+const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
 /* Refer to IS31 manual for these locations
  *   driver
  *   |  R location
@@ -156,22 +156,22 @@ enum __layers {
 // clang-format on
 void led_init_ports(void) {
     // set our LED pings as output
-    setPinOutput(LED_CAPS_LOCK_PIN); // LED1 Num Lock
-    writePinLow(LED_CAPS_LOCK_PIN);
-    setPinOutput(LED_MAC_OS_PIN); // LDE2 MAC\WIN
-    writePinLow(LED_MAC_OS_PIN);
-    setPinOutput(LED_WIN_LOCK_PIN); // LED3 Win Lock
-    writePinLow(LED_WIN_LOCK_PIN);
+    gpio_set_pin_output(LED_CAPS_LOCK_PIN); // LED1 Num Lock
+    gpio_write_pin_low(LED_CAPS_LOCK_PIN);
+    gpio_set_pin_output(LED_MAC_OS_PIN); // LDE2 MAC\WIN
+    gpio_write_pin_low(LED_MAC_OS_PIN);
+    gpio_set_pin_output(LED_WIN_LOCK_PIN); // LED3 Win Lock
+    gpio_write_pin_low(LED_WIN_LOCK_PIN);
 }
 
-bool led_update_kb(led_t led_state) {
-    bool res = led_update_user(led_state);
-    if (res) {
-        writePin(LED_CAPS_LOCK_PIN, led_state.caps_lock);
-        writePin(LED_MAC_OS_PIN, default_layer_state & ((1<<MAC_B)|(1<<MAC_W)));
-        writePin(LED_WIN_LOCK_PIN, keymap_config.no_gui);
+void housekeeping_task_kb(void) {
+    /* Execute every 1ms */
+    static uint32_t last_time = 0;
+    if (timer_elapsed32(last_time) >= 1) {
+        last_time = timer_read32();
+        gpio_write_pin(LED_MAC_OS_PIN, default_layer_state & ((1<<MAC_B)|(1<<MAC_W)));
+        gpio_write_pin(LED_WIN_LOCK_PIN, keymap_config.no_gui);
     }
-    return res;
 }
 
 bool dip_switch_update_kb(uint8_t index, bool active) {
@@ -189,7 +189,6 @@ bool dip_switch_update_kb(uint8_t index, bool active) {
                     layer_off(WIN_W);
                 }
                 keymap_config.no_gui = 0;
-                eeconfig_update_keymap(keymap_config.raw);
             } else {
                 if (default_layer_state & (1<<MAC_W)) {
                     set_single_persistent_default_layer(WIN_W);
@@ -199,8 +198,6 @@ bool dip_switch_update_kb(uint8_t index, bool active) {
                     layer_off(MAC_W);
                 }
             }
-            writePin(LED_MAC_OS_PIN,  default_layer_state & ((1<<MAC_B)|(1<<MAC_W)));
-            writePin(LED_WIN_LOCK_PIN, keymap_config.no_gui);
         default:
             break;
     }
